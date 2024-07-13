@@ -44,7 +44,7 @@ exports.addImage = functions.runWith(runtimeOpts).storage.object('/images').onFi
     console.log('image is explicit')
     // TO DO
     // delete image if in production
-    // log to database
+    recordImageInDatabase(imageUrl, senderUid)
     return
   }
 
@@ -56,7 +56,7 @@ exports.addImage = functions.runWith(runtimeOpts).storage.object('/images').onFi
   console.log('object.metadata.toUid:', object.metadata.toUid)
   const isResponse = object.metadata.toUid ? true : false
   console.log('isResponse:', isResponse)
-  const recipientUid = object.metadata.toUid ?? determineRecipientUid(allUsers, senderUid)
+  const recipientUid = object.metadata.toUid || determineRecipientUid(allUsers, senderUid)
   console.log('recipientUid:', recipientUid)
   console.log('senderUid:', senderUid)
 
@@ -89,8 +89,7 @@ async function createSignedUrl(filename) {
   return url
 }
 
-// remove async
-async function getWeightUrls(shardName) {
+function getWeightUrls(shardName) {
   return modelWeightUrls[shardName]
 }
 
@@ -105,7 +104,8 @@ async function isImageExplicit(imageUrl) {
 
   const probs = await pdjs.RunInference(modelUrl, filePaths, options)
   console.log('probs:', probs)
-  return (probs[0] > 0.1)
+  // return (probs[0] > 0.1)
+  return (probs[0] > 0.6)
 }
 
 function determineRecipientUid(allUsers, senderUid) {
@@ -147,7 +147,7 @@ async function addDatabaseEntry(imageFilename, imageData) {
 
   console.log('recipientUid:', imageData.to)
   console.log('senderUid:', imageData.from)
-  admin
+  await admin
     .database()
     .ref(`userData/${imageData.to}/inbox/${imageFilename}`)
     .set(imageData)
@@ -173,4 +173,19 @@ async function sendNotification(recipientRegistrationToken, isResponse) {
     .catch(function(error) {
       console.log("Error sending message:", error);
   });
+}
+
+async function recordImageInDatabase(imageUrl, senderUid) {
+  const dateTime = new Date().toLocaleString()
+
+  const data = {
+    imageUrl,
+    senderUid,
+    dateTime
+  }
+
+  await admin
+    .database()
+    .ref(`flaggedImages`)
+    .set(data)
 }
