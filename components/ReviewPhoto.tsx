@@ -4,7 +4,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   View,
-  Text,
+  Platform,
   StyleSheet,
   ActivityIndicator,
   Image,
@@ -17,6 +17,25 @@ import storage from "@react-native-firebase/storage";
 import database from '@react-native-firebase/database'
 
 import { useContainerContext } from "./ContainerContext";
+
+import mobileAds, { RewardedAd, TestIds, RewardedAdEventType } from 'react-native-google-mobile-ads'
+
+mobileAds()
+  .setRequestConfiguration({
+    testDeviceIdentifiers: ["EMULATOR"]
+  })
+
+mobileAds()
+  .initialize()
+  .then(adapterStatuses => {
+    console.log('adapterStatuses:', adapterStatuses)
+  })
+
+const adUnitId = __DEV__ ? TestIds.REWARDED : Platform.OS === 'ios' ? 'ca-app-pub-9408101332805838~3498696922' : 'ca-app-pub-9408101332805838~7720216806'
+console.log('adUnitID:', adUnitId)
+
+const rewardedAd = RewardedAd.createForAdRequest(adUnitId);
+
 
 async function uploadPhoto(uri: string, userUid: string, recipient: string, respondingToImageName: string, respondingToImageUrl: string) {
   return new Promise(async (resolve, reject) => {
@@ -50,6 +69,7 @@ async function uploadPhoto(uri: string, userUid: string, recipient: string, resp
 
 export default function ReviewPhoto(): React.JSX.Element {
   const [loading, setLoading] = useState<boolean>(false);
+  const [isAdLoaded, setAdLoaded] = useState(false)
   const {
     user,
     userData,
@@ -85,11 +105,36 @@ export default function ReviewPhoto(): React.JSX.Element {
     }
 
 
+    if (isAdLoaded) rewardedAd.show()
+
 
     setRespondingTo(null);
     setLoading(false);
     setPage("CameraPage");
   }
+
+  useEffect(() => {
+    const unsubscribeLoaded = rewardedAd.addAdEventListener(RewardedAdEventType.LOADED, () => {
+      console.log('ad is loaded')
+      setAdLoaded(true);
+    });
+
+    const unsubscribeEarned = rewardedAd.addAdEventListener(
+      RewardedAdEventType.EARNED_REWARD,
+      reward => {
+        console.log('User earned reward of ', reward);
+      },
+    );
+
+    // Start loading the rewarded ad straight away
+    rewardedAd.load();
+
+    // Unsubscribe from events on unmount
+    return () => {
+      unsubscribeLoaded();
+      unsubscribeEarned();
+    };
+  }, [])
 
   return (
     <ImageBackground
