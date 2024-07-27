@@ -2,22 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>958818368953-ma51ou2nbcaudhhi4nmfthplt6kjllms.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.958818368953-ma51ou2nbcaudhhi4nmfthplt6kjllms</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAxa15_P82rP5JA6T9KMhJ-2qh03duqCIU</string>
+	<string>AIzaSyBg7d4by-nk3qwHQffWdZPet0W0k5WZ_go</string>
 	<key>GCM_SENDER_ID</key>
-	<string>958818368953</string>
+	<string>670048616046</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.vibecheq.dev</string>
+	<string>com.vibecheq.prod</string>
 	<key>PROJECT_ID</key>
-	<string>vibecheq-dev-d930b</string>
+	<string>vibecheq-prod</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vibecheq-dev-d930b.appspot.com</string>
+	<string>vibecheq-prod.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +25,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:958818368953:ios:2372a01138a09cc7268a68</string>
+	<string>1:670048616046:ios:b8368de02bb8ddebe8707f</string>
+	<key>DATABASE_URL</key>
+	<string>https://vibecheq-prod-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
