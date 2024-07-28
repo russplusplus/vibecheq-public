@@ -15,12 +15,12 @@ export default {
       "**/*"
     ],
     "ios": {
-      "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST || "google-services-test.json",
+      "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST,
       "supportsTablet": true,
       "bundleIdentifier": "com.vibecheq.dev"
     },
     "android": {
-      "googleServicesFile": process.env.GOOGLE_SERVICES_JSON || "GoogleService-Info-test.plist",
+      "googleServicesFile": process.env.GOOGLE_SERVICES_JSON,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
