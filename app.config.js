@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "expo": {
     "name": "vibecheq",
     "slug": "vibecheq",
@@ -15,12 +15,12 @@ module.exports = {
       "**/*"
     ],
     "ios": {
-      "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST,
+      "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST || "google-services-test.json",
       "supportsTablet": true,
       "bundleIdentifier": "com.vibecheq.dev"
     },
     "android": {
-      "googleServicesFile": process.env.GOOGLE_SERVICES_JSON,
+      "googleServicesFile": process.env.GOOGLE_SERVICES_JSON || "GoogleService-Info-test.plist",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

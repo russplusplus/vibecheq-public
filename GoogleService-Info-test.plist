@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>973891374140-apiem68piiqfg1onlm5vo0e11sjb4js8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.973891374140-apiem68piiqfg1onlm5vo0e11sjb4js8</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>973891374140-5a0848cqnb1ni6nu8658akt8g478mrnp.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCdIf3NNNaGcLy2mF-3sn8v9Z1eaUV1WPU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>973891374140</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.Vibecheque</string>
+	<key>PROJECT_ID</key>
+	<string>vibecheque-543ff</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vibecheque-543ff.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:973891374140:ios:ecc29b28fce27d3550c739</string>
+	<key>DATABASE_URL</key>
+	<string>https://vibecheque-543ff.firebaseio.com</string>
+</dict>
+</plist>
