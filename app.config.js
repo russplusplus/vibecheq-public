@@ -17,7 +17,7 @@ export default {
     "ios": {
       "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST,
       "supportsTablet": true,
-      "bundleIdentifier": "com.vibecheq.dev"
+      "bundleIdentifier": "com.vibecheq.prod"
     },
     "android": {
       "googleServicesFile": process.env.GOOGLE_SERVICES_JSON,
@@ -29,7 +29,7 @@ export default {
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.vibecheq.dev"
+      "package": "com.vibecheq.prod"
     },
     "androidStatusBar": {
       "translucent": "false"
