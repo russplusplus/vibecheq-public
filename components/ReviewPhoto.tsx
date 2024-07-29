@@ -18,25 +18,6 @@ import database from '@react-native-firebase/database'
 
 import { useContainerContext } from "./ContainerContext";
 
-import mobileAds, { RewardedAd, TestIds, RewardedAdEventType } from 'react-native-google-mobile-ads'
-
-mobileAds()
-  .setRequestConfiguration({
-    testDeviceIdentifiers: ["EMULATOR"]
-  })
-
-mobileAds()
-  .initialize()
-  .then(adapterStatuses => {
-    console.log('adapterStatuses:', adapterStatuses)
-  })
-
-const adUnitId = __DEV__ ? TestIds.REWARDED : Platform.OS === 'ios' ? 'ca-app-pub-9408101332805838~3498696922' : 'ca-app-pub-9408101332805838~7720216806'
-console.log('adUnitID:', adUnitId)
-
-const rewardedAd = RewardedAd.createForAdRequest(adUnitId);
-
-
 async function uploadPhoto(uri: string, userUid: string, recipient: string, respondingToImageName: string, respondingToImageUrl: string) {
   return new Promise(async (resolve, reject) => {
     console.log("in uploadPhoto");

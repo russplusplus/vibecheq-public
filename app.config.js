@@ -20,7 +20,7 @@ export default {
       "bundleIdentifier": "com.vibecheq.prod"
     },
     "android": {
-      "googleServicesFile": process.env.GOOGLE_SERVICES_JSON,
+      "googleServicesFile": process.env.GOOGLE_SERVICES_JSON ?? "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -52,13 +52,6 @@ export default {
           "ios": {
             "useFrameworks": "static"
           }
-        }
-      ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-9408101332805838~7720216806",
-          "iosAppId": "ca-app-pub-9408101332805838~3498696922"
         }
       ]
     ],
