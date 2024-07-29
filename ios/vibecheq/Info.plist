@@ -45,10 +45,6 @@
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
-    <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-9408101332805838~3498696922</string>
-    <key>GADDelayAppMeasurementInit</key>
-    <false/>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>

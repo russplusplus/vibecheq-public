@@ -1,4 +1,4 @@
-{
+export default {
   "expo": {
     "name": "vibecheq",
     "slug": "vibecheq",
@@ -15,12 +15,12 @@
       "**/*"
     ],
     "ios": {
-      "googleServicesFile": "./GoogleService-Info.plist",
+      "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST ?? "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.vibecheq.dev"
     },
     "android": {
-      "googleServicesFile": "google-services.json",
+      "googleServicesFile": process.env.GOOGLE_SERVICES_JSON ?? "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -53,14 +53,12 @@
             "useFrameworks": "static"
           }
         }
-      ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-9408101332805838~7720216806",
-          "iosAppId": "ca-app-pub-9408101332805838~3498696922"
-        }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "18fa69b1-f495-4899-9793-d327be69e418"
+      }
+    }
   }
 }
