@@ -38,5 +38,9 @@ yarn-error.*
 google-services.json
 GoogleService-Info.plist
 
+google-services-PROD.json
+GoogleService-Info-PROD.plist
+
+
 android
 ios

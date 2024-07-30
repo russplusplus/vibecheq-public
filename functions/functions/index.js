@@ -42,8 +42,6 @@ exports.addImage = functions.runWith(runtimeOpts).storage.object('/images').onFi
 
   if (await isImageExplicit(imageUrl)) {
     console.log('image is explicit')
-    // TO DO
-    // delete image if in production
     recordImageInDatabase(imageUrl, senderUid)
     return
   }
@@ -77,7 +75,7 @@ exports.addImage = functions.runWith(runtimeOpts).storage.object('/images').onFi
 
 
 async function createSignedUrl(filename) {
-  const bucket = gcs.bucket("vibecheq-dev-d930b.appspot.com");
+  const bucket = gcs.bucket("vibecheq-prod.appspot.com");
   // console.log('bucket:', bucket)
   const file = bucket.file(filename);
   // console.log('file:', file)

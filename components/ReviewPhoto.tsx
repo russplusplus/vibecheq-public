@@ -21,6 +21,7 @@ import { useContainerContext } from "./ContainerContext";
 async function uploadPhoto(uri: string, userUid: string, recipient: string, respondingToImageName: string, respondingToImageUrl: string) {
   return new Promise(async (resolve, reject) => {
     console.log("in uploadPhoto");
+    console.log('userUid:', userUid)
     console.log('respondingToImageName:', respondingToImageName)
     console.log('respondingToImageUrl:', respondingToImageUrl)
 
@@ -63,6 +64,7 @@ export default function ReviewPhoto(): React.JSX.Element {
   async function sendPhoto() {
     setLoading(true);
     console.log("sending photo");
+    console.log('user.user.uid:', user.user.uid)
     let inboxImageName = respondingTo ? Object.keys(userData.inbox)[0] : ''
     let inboxImageUrl = respondingTo ? userData.inbox[Object.keys(userData.inbox)[0]].url : ''
     // "as StorageData" is a type assertion
@@ -85,37 +87,10 @@ export default function ReviewPhoto(): React.JSX.Element {
       await database().ref(`userData/${uid}/inbox/${toBeDeleted}`).remove();  
     }
 
-
-    if (isAdLoaded) rewardedAd.show()
-
-
     setRespondingTo(null);
     setLoading(false);
     setPage("CameraPage");
   }
-
-  useEffect(() => {
-    const unsubscribeLoaded = rewardedAd.addAdEventListener(RewardedAdEventType.LOADED, () => {
-      console.log('ad is loaded')
-      setAdLoaded(true);
-    });
-
-    const unsubscribeEarned = rewardedAd.addAdEventListener(
-      RewardedAdEventType.EARNED_REWARD,
-      reward => {
-        console.log('User earned reward of ', reward);
-      },
-    );
-
-    // Start loading the rewarded ad straight away
-    rewardedAd.load();
-
-    // Unsubscribe from events on unmount
-    return () => {
-      unsubscribeLoaded();
-      unsubscribeEarned();
-    };
-  }, [])
 
   return (
     <ImageBackground

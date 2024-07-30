@@ -7,7 +7,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "build": "expo prebuild"
+    "build": "expo prebuild",
+    "create-weight-urls": "node cli/createModelWeightSignedUrls.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.21.0",
@@ -34,7 +35,9 @@
     "typescript": "^5.1.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@google-cloud/storage": "^7.12.0",
+    "firebase-admin": "^12.3.0"
   },
   "private": true
 }
