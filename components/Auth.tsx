@@ -42,20 +42,6 @@ export default function Auth() {
     const fullPhoneNumber = selectedCountry?.callingCode + ' ' + phoneNumber
     console.log('in sendOtp. fullPhoneNumber:', fullPhoneNumber)
 
-    // const { data, error } = await supabase.auth.signInWithOtp({
-    //   phone: selectedCountry?.callingCode + phone,
-    // })
-    // if (error) {
-    //   if (error.message?.includes('Invalid phone number') || error.message?.includes("Invalid 'To' Phone Number")) {
-    //     setError('Please enter a valid phone number')
-    //   } else {
-    //     setError('An error occurred')
-    //   }
-    //   setLoading(false)
-    //   console.log(error.message)
-    //   return
-    // }
-
     const confirmation = await auth().signInWithPhoneNumber(fullPhoneNumber);
     console.log('confirmation:', confirmation)
     setConfirm(confirmation)
@@ -66,8 +52,10 @@ export default function Auth() {
 
   async function verifyOtp() {
     setLoading(true)
-   
+    
     const user = await confirm.confirm(password)
+    // TODO: HANDLE INCORRECT CODES HERE
+
     const { uid } = user.user
     console.log('code is valid! user:', user)
     updateRegistrationToken(uid)

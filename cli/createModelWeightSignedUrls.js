@@ -25,7 +25,7 @@ async function createModelWeightSignedUrls(numberOfShards) {
 async function createModelJSONUrl() {
   const bucket = gcs.bucket("vibecheq-prod.appspot.com");
 
-  const modelFile = bucket.file(`model.json`)
+  const modelFile = bucket.file(`model/model.json`)
   const modelUrlArr = await modelFile.getSignedUrl({
     action: 'read',
     expires: '03-09-2491'

@@ -50,6 +50,7 @@ export default function CameraPage() {
       console.log('user not found')
       return
     }
+    console.log('in init(). user:', user)
     const data = await getUserData(user.user.uid)
     setUserData(data)
   }
