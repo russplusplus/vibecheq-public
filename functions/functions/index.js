@@ -42,7 +42,7 @@ exports.addImage = functions.runWith(runtimeOpts).storage.object('/images').onFi
 
   if (await isImageExplicit(imageUrl)) {
     console.log('image is explicit')
-    recordImageInDatabase(imageUrl, senderUid)
+    // recordImageInDatabase(imageUrl, senderUid)
     return
   }
 
@@ -103,7 +103,7 @@ async function isImageExplicit(imageUrl) {
   const probs = await pdjs.RunInference(modelUrl, filePaths, options)
   console.log('probs:', probs)
   // return (probs[0] > 0.1)
-  return (probs[0] > 0.6)
+  return (probs[0] > 0.8)
 }
 
 function determineRecipientUid(allUsers, senderUid) {
