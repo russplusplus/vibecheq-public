@@ -86,7 +86,7 @@ export default function ReviewPhoto(): React.JSX.Element {
     }
 
 
-    if (isAdLoaded) rewardedAd.show()
+    // if (isAdLoaded) rewardedAd.show()
 
 
     setRespondingTo(null);
@@ -94,28 +94,28 @@ export default function ReviewPhoto(): React.JSX.Element {
     setPage("CameraPage");
   }
 
-  useEffect(() => {
-    const unsubscribeLoaded = rewardedAd.addAdEventListener(RewardedAdEventType.LOADED, () => {
-      console.log('ad is loaded')
-      setAdLoaded(true);
-    });
+  // useEffect(() => {
+  //   const unsubscribeLoaded = rewardedAd.addAdEventListener(RewardedAdEventType.LOADED, () => {
+  //     console.log('ad is loaded')
+  //     setAdLoaded(true);
+  //   });
 
-    const unsubscribeEarned = rewardedAd.addAdEventListener(
-      RewardedAdEventType.EARNED_REWARD,
-      reward => {
-        console.log('User earned reward of ', reward);
-      },
-    );
+  //   const unsubscribeEarned = rewardedAd.addAdEventListener(
+  //     RewardedAdEventType.EARNED_REWARD,
+  //     reward => {
+  //       console.log('User earned reward of ', reward);
+  //     },
+  //   );
 
-    // Start loading the rewarded ad straight away
-    rewardedAd.load();
+  //   // Start loading the rewarded ad straight away
+  //   rewardedAd.load();
 
-    // Unsubscribe from events on unmount
-    return () => {
-      unsubscribeLoaded();
-      unsubscribeEarned();
-    };
-  }, [])
+  //   // Unsubscribe from events on unmount
+  //   return () => {
+  //     unsubscribeLoaded();
+  //     unsubscribeEarned();
+  //   };
+  // }, [])
 
   return (
     <ImageBackground
