@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Alert, StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator, Image, PermissionsAndroid } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator, Image, PermissionsAndroid } from 'react-native'
 import { Styles, Colors } from '../lib/constants'
 // import { supabase } from '../lib/supabase'
 import { Camera, CameraType } from 'expo-camera';
@@ -14,6 +14,8 @@ import LoadingModal from './LoadingModal'
 import { useContainerContext } from './ContainerContext'
 
 import { getUserData } from '../lib/utils'
+
+console.log('Platform:', Platform)
 
 export default function CameraPage() {
 
@@ -164,8 +166,8 @@ const styles = StyleSheet.create({
   topButtons: {
     flex: 0.2,
     flexDirection: 'row',
-    marginHorizontal: 114,
-    marginTop: 30,
+    marginHorizontal: Platform.OS === "ios" ? 128 : 118,
+    marginTop: Platform.OS === "ios" ? 42 : 36,
     justifyContent: 'space-between'
   },
   bottomButtons: {
@@ -173,8 +175,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 114,
-    marginBottom: 16,
+    marginHorizontal: Platform.OS === "ios" ? 128 : 118,
+    marginBottom: Platform.OS === "ios" ? 30 : 20,
   },
   bottomTopButtons: {
     flex: 0.5,

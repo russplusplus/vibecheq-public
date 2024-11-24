@@ -12,7 +12,6 @@ import database from '@react-native-firebase/database';
 import { useContainerContext } from './ContainerContext'
 
 const windowHeight = Dimensions.get('window').height
-console.log('windowHeight:', windowHeight)
 
 export default function Auth() {
   const [phoneNumber, setPhoneNumber] = useState<string>('')

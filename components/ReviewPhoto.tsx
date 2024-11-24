@@ -87,10 +87,37 @@ export default function ReviewPhoto(): React.JSX.Element {
       await database().ref(`userData/${uid}/inbox/${toBeDeleted}`).remove();  
     }
 
+
+    // if (isAdLoaded) rewardedAd.show()
+
+
     setRespondingTo(null);
     setLoading(false);
     setPage("CameraPage");
   }
+
+  // useEffect(() => {
+  //   const unsubscribeLoaded = rewardedAd.addAdEventListener(RewardedAdEventType.LOADED, () => {
+  //     console.log('ad is loaded')
+  //     setAdLoaded(true);
+  //   });
+
+  //   const unsubscribeEarned = rewardedAd.addAdEventListener(
+  //     RewardedAdEventType.EARNED_REWARD,
+  //     reward => {
+  //       console.log('User earned reward of ', reward);
+  //     },
+  //   );
+
+  //   // Start loading the rewarded ad straight away
+  //   rewardedAd.load();
+
+  //   // Unsubscribe from events on unmount
+  //   return () => {
+  //     unsubscribeLoaded();
+  //     unsubscribeEarned();
+  //   };
+  // }, [])
 
   return (
     <ImageBackground
