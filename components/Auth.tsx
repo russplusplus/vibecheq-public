@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator } from 'react-native'
+import { Dimensions, StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator } from 'react-native'
 import { Image } from 'expo-image'
 import { Styles, Colors } from '../lib/constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -10,6 +10,8 @@ import messaging from '@react-native-firebase/messaging';
 import database from '@react-native-firebase/database';
 
 import { useContainerContext } from './ContainerContext'
+
+const windowHeight = Dimensions.get('window').height
 
 export default function Auth() {
   const [phoneNumber, setPhoneNumber] = useState<string>('')
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    marginTop: 250,
+    marginTop: getTopMargin(windowHeight),
     marginBottom: 6,
     width: '100%',
     height: 100
@@ -243,3 +245,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 })
+
+function getTopMargin(height: number) {
+  if (height < 800) {
+    return 250
+  } else if (height < 900) {
+    return 300
+  } else {
+    return 350
+  }
+}
