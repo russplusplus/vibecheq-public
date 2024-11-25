@@ -1,6 +1,6 @@
 export default {
   "expo": {
-    "name": "vibecheq",
+    "name": "Vibecheq",
     "slug": "vibecheq",
     "version": "1.0.0",
     "orientation": "portrait",
