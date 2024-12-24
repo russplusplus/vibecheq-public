@@ -10,7 +10,7 @@
     "build": "expo prebuild"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "1.21.0",
+    "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-firebase/app": "^19.2.2",
     "@react-native-firebase/auth": "^19.2.2",
     "@react-native-firebase/database": "^19.2.2",
@@ -22,13 +22,13 @@
     "expo-camera": "^14.0.3",
     "expo-dev-client": "~3.3.11",
     "expo-font": "^11.10.2",
-    "expo-image": "~1.10.6",
-    "expo-modules-autolinking": "~1.10.0",
+    "expo-image": "~1.10.5",
+    "expo-modules-autolinking": "^1.10.3",
     "expo-notifications": "^0.27.7",
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "^2.9.4",
     "react": "18.2.0",
-    "react-native": "0.73.6",
+    "react-native": "^0.73.2",
     "react-native-international-phone-number": "^0.7.6",
     "react-native-url-polyfill": "^2.0.0",
     "typescript": "^5.1.3"
