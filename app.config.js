@@ -1,13 +1,13 @@
 export default {
   "expo": {
-    "name": "vibecheq",
+    "name": "Vibecheq",
     "slug": "vibecheq",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#303841"
     },
@@ -16,7 +16,7 @@ export default {
     ],
     "ios": {
       "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST ?? "./GoogleService-Info.plist",
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.vibecheq.dev"
     },
     "android": {
