@@ -97,10 +97,12 @@ async function isImageExplicit(imageUrl) {
   const options = {
     weightUrlConverter: getWeightUrls
   }
+  console.log('options:', options)
 
   const filePaths = [
     imageUrl
   ]
+  console.log('filePaths:', filePaths)
 
   const probs = await pdjs.RunInference(modelUrl, filePaths, options)
   console.log('probs:', probs)
