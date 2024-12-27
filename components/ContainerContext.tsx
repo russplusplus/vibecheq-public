@@ -5,8 +5,7 @@ type UserData = {
     phoneNumber: string,
     inbox: any,
     settings: any,
-    unbanTime?: number,
-    vibeRecord?: any
+    unbanTime?: number
 }
 
 type ContainerContext = {
@@ -44,6 +43,10 @@ export const ContainerContextProvider = (props: any) => {
         respondingTo,
         setRespondingTo
     }
+
+    useEffect(() => {
+        console.log('user changed:', user)
+    }, [user])
 
     return <ContainerContext.Provider value={value} {...props}/>
 }
