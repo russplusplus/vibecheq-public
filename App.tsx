@@ -34,6 +34,10 @@ const Container = () => {
   }
 
   useEffect(() => {
+    console.log('user changed:', user)
+  }, [user])
+
+  useEffect(() => {
     checkIfLoggedIn()
   }, [])  
 

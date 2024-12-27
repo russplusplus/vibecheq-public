@@ -116,7 +116,7 @@ export default function Auth() {
               style={styles.button}
             >
               {loading
-              ? <ActivityIndicator size="large" color='black' /> 
+              ? <ActivityIndicator size="small" color='black' /> 
               : <Text style={{ fontSize: Styles.fontNormal }}>verify passcode</Text>
               }
             </TouchableOpacity>
@@ -142,7 +142,7 @@ export default function Auth() {
               style={styles.button}
             >
               {loading 
-              ? <ActivityIndicator size="large" color='black' /> 
+              ? <ActivityIndicator size="small" color='black' /> 
               : <Text style={{ fontSize: Styles.fontNormal }}>Send passcode</Text>
               }
             </TouchableOpacity>

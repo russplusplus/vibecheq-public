@@ -8,7 +8,7 @@ export const Styles = {
 }
 
 export const Colors = {
-  orange: '#FF5722',
+  orange: '#F05454',
   white: '#EEEEEE',
   black: '#303841',
   blue: '#00ADB5'

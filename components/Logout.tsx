@@ -13,6 +13,7 @@ export default function Logout({
     const { user, setUser } = useContainerContext()
 
     async function signOut() {
+        console.log('in signOut')
         await AsyncStorage.removeItem('user')
         setUser(null)
     }
