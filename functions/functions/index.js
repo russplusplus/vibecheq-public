@@ -6,7 +6,7 @@ const admin = require('firebase-admin');
 // that never expire. The firebase-admin sdk can only create 
 // signed URLs that last up to a week.
 const { Storage } = require('@google-cloud/storage');
-const gcs = new Storage({keyFilename: './service-account.json'});
+const gcs = new Storage({keyFilename: './service-account-PROD.json'});
 const { modelUrl, modelWeightUrls } = require('./constants')
 const pdjs = require('private-detector-js')
 

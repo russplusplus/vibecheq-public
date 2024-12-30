@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 const { Storage } = require('@google-cloud/storage');
-const gcs = new Storage({keyFilename: '../functions/functions/service-account.json'});
+const gcs = new Storage({keyFilename: '../functions/functions/service-account-PROD.json'});
 
 // createModelWeightSignedUrls(51)
 createModelJSONUrl()
