@@ -1,7 +1,7 @@
 export default {
   "expo": {
     "name": "Vibecheq",
-    "slug": "vibecheq",
+    "slug": "Vibecheq",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,7 +23,7 @@ export default {
       "googleServicesFile": process.env.GOOGLE_SERVICES_JSON ?? "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#303841"
       },
       "permissions": [
         "android.permission.CAMERA",
