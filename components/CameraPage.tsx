@@ -96,7 +96,7 @@ export default function CameraPage() {
             <Ionicons name="return-down-back" size={36} color={Colors.white}  />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Ionicons name="settings-outline" size={36} color={Colors.white}  />
+            <Ionicons name="settings-outline" size={36} color={Colors.white} style={{'opacity': 0}} />
           </TouchableOpacity>
         </View>
         <View

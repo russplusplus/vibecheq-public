@@ -7,7 +7,7 @@ export default {
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#303841"
     },
@@ -16,14 +16,14 @@ export default {
     ],
     "ios": {
       "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST ?? "./GoogleService-Info-PROD.plist",
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.vibecheq.prod"
     },
     "android": {
       "googleServicesFile": process.env.GOOGLE_SERVICES_JSON ?? "./google-services-PROD.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#303841"
       },
       "permissions": [
         "android.permission.CAMERA",

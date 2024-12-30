@@ -20,10 +20,10 @@ const Container = () => {
   async function checkIfLoggedIn() {
     console.log('in checkIfLoggedIn')
     try {
-      const user = JSON.parse(await AsyncStorage.getItem('user'))
-      if (user) {
+      const asyncStorageUser = JSON.parse(await AsyncStorage.getItem('user'))
+      if (asyncStorageUser) {
         console.log('user found in AsyncStorage')
-        setUser(user)
+        setUser(asyncStorageUser)
       } else {
         console.log('no user item found in AsyncStorage')
       }
@@ -32,6 +32,10 @@ const Container = () => {
       console.log('error:', error)
     }
   }
+
+  // useEffect(() => {
+  //   console.log('user changed:', user)
+  // }, [user])
 
   useEffect(() => {
     checkIfLoggedIn()

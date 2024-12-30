@@ -25,6 +25,13 @@ export default function Auth() {
   const { user, setUser } = useContainerContext()
 
   async function updateRegistrationToken(uid: string) {
+    console.log('in updateRegistrationToken. uid:', uid)
+    // await messaging().registerDeviceForRemoteMessages()
+    const authorizationStatus = await messaging().requestPermission()
+    console.log('authorizationStatus:', authorizationStatus)
+    if (authorizationStatus !== messaging.AuthorizationStatus.AUTHORIZED && authorizationStatus !== messaging.AuthorizationStatus.PROVISIONAL) {
+      return
+    }
     const registrationToken: string = await messaging().getToken()
     console.log('registrationToken:', registrationToken)
     try {
@@ -60,7 +67,7 @@ export default function Auth() {
 
     const { uid } = user.user
     console.log('code is valid! user:', user)
-    updateRegistrationToken(uid)
+    await updateRegistrationToken(uid)
     setUser(user)
     await AsyncStorage.setItem("user", JSON.stringify(user))
 
@@ -75,7 +82,7 @@ export default function Auth() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/images/title.png')}
+        source={require('../assets/title.png')}
         style={styles.title}
       />
       <Text style={{ color: Colors.orange, fontSize: Styles.fontNormal, marginBottom: 4 }}>{error}</Text>
@@ -97,7 +104,7 @@ export default function Auth() {
               style={styles.button}
             >
               {loading
-              ? <ActivityIndicator size="large" color='black' /> 
+              ? <ActivityIndicator size="small" color='black' /> 
               : <Text style={{ fontSize: Styles.fontNormal }}>verify passcode</Text>
               }
             </TouchableOpacity>
@@ -123,7 +130,7 @@ export default function Auth() {
               style={styles.button}
             >
               {loading 
-              ? <ActivityIndicator size="large" color='black' /> 
+              ? <ActivityIndicator size="small" color='black' /> 
               : <Text style={{ fontSize: Styles.fontNormal }}>Send passcode</Text>
               }
             </TouchableOpacity>
@@ -201,7 +208,7 @@ const styles = StyleSheet.create({
     marginTop: getTopMargin(windowHeight),
     marginBottom: 6,
     width: '100%',
-    height: 100
+    height: 120
   },
   inputLabel: { 
     color: Colors.white, 
