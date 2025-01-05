@@ -40,6 +40,12 @@ exports.addImage = functions.runWith(runtimeOpts).storage.object('/images').onFi
   const imageUrl = await createSignedUrl(object.name)
   console.log('imageUrl:', imageUrl)
 
+  // const specialImageUrl = await createSignedUrl('images/PXL_20240518_203402708.jpg')
+  // console.log('specialImageUrl:', specialImageUrl)
+
+  // const specialImageUrl2 = await createSignedUrl('images/PXL_20240913_150451993.jpg')
+  // console.log('specialImageUrl2:', specialImageUrl2)
+
   if (await isImageExplicit(imageUrl)) {
     console.log('image is explicit')
     // TO DO

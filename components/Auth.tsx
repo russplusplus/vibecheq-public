@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator } from 'react-native'
+import { 
+  Dimensions, 
+  StyleSheet, 
+  View, 
+  TouchableOpacity, 
+  Text, 
+  Platform, 
+  TextInput, 
+  ActivityIndicator, 
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
+} from 'react-native'
 import { Image } from 'expo-image'
 import { Styles, Colors } from '../lib/constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -92,7 +104,8 @@ export default function Auth() {
   })
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
+      <>
       <Image
         source={require('../assets/title.png')}
         style={styles.title}
@@ -123,32 +136,38 @@ export default function Auth() {
           </View>
         </>
         :
-        <>
-          <View style={styles.inputContainer}>
-            <PhoneInput
-              phoneInputStyles={phoneInputStyles}
-              modalStyles={modalStyles}
-              onChangePhoneNumber={(value: string) => setPhoneNumber(value)}
-              value={phoneNumber}
-              selectedCountry={selectedCountry}
-              onChangeSelectedCountry={(value: ICountry) => setSelectedCountry(value)}
-              defaultCountry='US'
-              placeholder='phone number'
-            />
-          </View>
-          <View >
-            <TouchableOpacity
-              onPress={() => sendOtp()}
-              style={styles.button}
-            >
-              {loading 
-              ? <ActivityIndicator size="small" color='black' /> 
-              : <Text style={{ fontSize: Styles.fontNormal }}>Send passcode</Text>
-              }
-            </TouchableOpacity>
-          </View>
-        </>
+        <TouchableWithoutFeedback onPress={() => {
+          console.log('touch anywhere')
+          Keyboard.dismiss
+        }}>
+          <>
+            <View style={styles.inputContainer}>
+              <PhoneInput
+                phoneInputStyles={phoneInputStyles}
+                modalStyles={modalStyles}
+                onChangePhoneNumber={(value: string) => setPhoneNumber(value)}
+                value={phoneNumber}
+                selectedCountry={selectedCountry}
+                onChangeSelectedCountry={(value: ICountry) => setSelectedCountry(value)}
+                defaultCountry='US'
+                placeholder='phone number'
+              />
+            </View>
+            <View >
+              <TouchableOpacity
+                onPress={sendOtp}
+                style={styles.button}
+              >
+                {loading 
+                ? <ActivityIndicator size="small" color='black' /> 
+                : <Text style={{ fontSize: Styles.fontNormal }}>Send passcode</Text>
+                }
+              </TouchableOpacity>
+            </View>
+          </>
+        </TouchableWithoutFeedback>
       }
+      </>
     </View>
   )
 }
@@ -220,7 +239,7 @@ const styles = StyleSheet.create({
     marginTop: getTopMargin(windowHeight),
     marginBottom: 6,
     width: '100%',
-    height: 120
+    height: windowHeight > 1100 ? 200 : 120
   },
   inputLabel: { 
     color: Colors.white, 
@@ -254,11 +273,14 @@ const styles = StyleSheet.create({
 })
 
 function getTopMargin(height: number) {
+  console.log('height:', height)
   if (height < 800) {
     return 250
   } else if (height < 900) {
     return 300
-  } else {
+  } else if (height < 1100) {
     return 350
+  } else {
+    return 400
   }
 }

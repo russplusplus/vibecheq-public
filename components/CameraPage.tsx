@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator, Image, PermissionsAndroid } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator, Image, PermissionsAndroid, Dimensions } from 'react-native'
 import { Styles, Colors } from '../lib/constants'
 // import { supabase } from '../lib/supabase'
 import { Camera, CameraType } from 'expo-camera';
@@ -16,6 +16,11 @@ import { useContainerContext } from './ContainerContext'
 import { getUserData } from '../lib/utils'
 
 console.log('Platform:', Platform)
+
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
+console.log('windowHeight:', windowHeight)
+console.log('windowWidth:', windowWidth)
 
 export default function CameraPage() {
 
@@ -166,7 +171,7 @@ const styles = StyleSheet.create({
   topButtons: {
     flex: 0.2,
     flexDirection: 'row',
-    marginHorizontal: Platform.OS === "ios" ? 128 : 118,
+    marginHorizontal: marginHorizontal(),
     marginTop: Platform.OS === "ios" ? 42 : 36,
     justifyContent: 'space-between'
   },
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: Platform.OS === "ios" ? 128 : 118,
+    marginHorizontal: marginHorizontal(),
     marginBottom: Platform.OS === "ios" ? 30 : 20,
   },
   bottomTopButtons: {
@@ -228,3 +233,18 @@ const styles = StyleSheet.create({
     color: "black"
   }
 })
+
+function marginHorizontal() {
+  console.log('windowWidth:', windowWidth)
+  console.log('Platform.OS:', Platform.OS)
+  if (windowWidth < 500) {
+    if (Platform.OS === 'ios') {
+      return 128
+    } else {
+      return 118
+    }
+  } else {
+    console.log('window width is greater than 500')
+    return 240
+  }
+}
