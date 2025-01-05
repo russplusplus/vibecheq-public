@@ -245,6 +245,6 @@ function marginHorizontal() {
     }
   } else {
     console.log('window width is greater than 500')
-    return 240
+    return 260
   }
 }
