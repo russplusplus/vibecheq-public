@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     marginTop: getTopMargin(windowHeight),
     marginBottom: 6,
     width: '100%',
-    height: windowHeight > 1100 ? 250 : 120
+    height: windowHeight > 1100 ? 250 : 140
   },
   inputLabel: { 
     color: Colors.white, 
