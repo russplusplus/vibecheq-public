@@ -30,7 +30,7 @@ export default function Logout({
                 <View style={styles.modalContainer}>
                     <Text style={styles.text}>Log out?</Text>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.yesButton}
                         onPress={() => {
                             signOut()
                         }}
@@ -38,7 +38,7 @@ export default function Logout({
                         <Text style={{fontSize: Styles.fontNormal}}>Yes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.noButton}
                         onPress={() => setLogoutMode(!logoutMode)}
                     >
                         <Text style={{fontSize: Styles.fontNormal}}>No</Text>
@@ -71,7 +71,20 @@ const styles = StyleSheet.create({
         fontSize: Styles.fontNormal,
         color: Colors.white
     },
-    button: {
+    yesButton: {
+        marginTop: 20,
+        paddingVertical: 4,
+        paddingHorizontal: 4,
+        width: 250,
+        height: 38,
+        backgroundColor: Colors.red,
+        alignItems: 'center',
+        fontSize: Styles.fontLarge,
+        borderRadius: 8,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    noButton: {
         marginTop: 20,
         paddingVertical: 4,
         paddingHorizontal: 4,
@@ -83,5 +96,5 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         flexDirection: 'column',
         justifyContent: 'center'
-      }
+    }
 })

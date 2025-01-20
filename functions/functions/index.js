@@ -62,9 +62,8 @@ exports.addImage = functions.runWith(runtimeOpts).storage.object('/images').onFi
   console.log('object.metadata.toUid:', object.metadata.toUid)
   const isResponse = object.metadata.toUid ? true : false
   console.log('isResponse:', isResponse)
-  const recipientUid = object.metadata.toUid || determineRecipientUid(allUsers, senderUid)
-  console.log('recipientUid:', recipientUid)
-  console.log('senderUid:', senderUid)
+
+  const recipientUid = object.metadata.toUid || await determineRecipientUid(allUsers, senderUid)
 
   const imageData = {
     from: senderUid,
@@ -116,23 +115,80 @@ async function isImageExplicit(imageUrl) {
   return (probs[0] > 0.6)
 }
 
-function determineRecipientUid(allUsers, senderUid) {
-  console.log('no recipient UID found in metadata. Randomly assigning recipient...')
-  console.log('allUsers:', allUsers)
-  let uidArr = []
-  for (let user in allUsers) {
-    if (user != senderUid) {
-      console.log('user', user, 'is a suitable recipient')
-      uidArr.push(user)
-    } else {
-      console.log('user', user, 'is NOT a suitable recipient')
+async function determineRecipientUid(allUsers, senderUid) {
+  return new Promise(async (resolve, reject) => {
+
+    console.log('no recipient UID found in metadata. Randomly assigning recipient...')
+    console.log('allUsers:', allUsers)
+    let allUsersArr = []
+    for (let user in allUsers) {
+      allUsersArr.push(user)
     }
-  }
-  console.log('uidArr:', uidArr)
-  console.log('senderUid:', senderUid)
-  const recipientUid = uidArr[Math.floor(Math.random() * uidArr.length)]
-  console.log('recipientUid:', recipientUid)
-  return recipientUid
+    console.log('senderUid:', senderUid)
+
+    let recipientUid
+    let loopCount = 0
+    let isValid = false
+    do {
+      loopCount++
+      console.log('loopCount:', loopCount)
+      if (loopCount === 100) {
+        console.log('100th loop reached. Exiting loop...')
+        isValid = true
+      }
+
+      recipientUid = allUsersArr[Math.floor(Math.random() * allUsersArr.length)]
+
+      if (!recipientUid) {
+        console.log('recipient is falsey:', recipientUid)
+        continue
+      }
+    
+      if (recipientUid === senderUid) {
+        console.log(`recipient ${recipientUid} is the same as sender ${senderUid}`)
+        continue
+      }
+
+      const isRecipientBlocked = await isRecipientUidBlocked(recipientUid, senderUid)
+      if (isRecipientBlocked) {
+        continue
+      }
+
+      isValid = true
+
+    } while (!isValid)
+
+    console.log('after isRecipientUidValid passed. recipientUid:', recipientUid)
+    resolve(recipientUid)
+  })
+}
+
+function isRecipientUidBlocked(recipient, sender) {
+  return new Promise(async (resolve, reject) => {
+    console.log('in isRecipientUidValid. recipient:', recipient, '. sender:', sender)
+
+    const blockListSnapshot = await admin
+      .database()
+      .ref(`userData/${recipient}/blockList`)
+      .once('value')
+      .catch((err) => {
+        console.log('get blockList error:', err)
+        reject(err)
+      })
+
+    const blockList = blockListSnapshot.val()
+    const blockListArr = Object.keys(blockList)
+    console.log('blockListArr:', blockListArr)
+
+    if (blockListArr.includes(sender)) {
+      console.log(`sender ${sender} is blocked by recipient ${recipient}`)
+      resolve(true)
+      return
+    }
+
+    console.log(`recipient ${recipient} is valid`)
+    resolve(false)
+  })
 }
 
 async function createModelWeightSignedUrls(numberOfShards) {
@@ -153,8 +209,8 @@ async function createModelWeightSignedUrls(numberOfShards) {
 async function addDatabaseEntry(imageFilename, imageData) {
   console.log('in addDatabaseEntry. imageData:', imageData)
 
-  console.log('recipientUid:', imageData.to)
-  console.log('senderUid:', imageData.from)
+  console.log('imageData.to:', imageData.to)
+  console.log('imageData.from:', imageData.from)
   await admin
     .database()
     .ref(`userData/${imageData.to}/inbox/${imageFilename}`)

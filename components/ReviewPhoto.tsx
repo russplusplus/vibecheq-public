@@ -8,6 +8,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Image,
+  Dimensions
 } from "react-native";
 import { Styles, Colors } from "../lib/constants";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -15,8 +16,10 @@ import { FontAwesome6 } from "@expo/vector-icons";
 // import { supabase } from '../lib/supabase'
 import storage from "@react-native-firebase/storage";
 import database from '@react-native-firebase/database'
-
 import { useContainerContext } from "./ContainerContext";
+
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
 
 async function uploadPhoto(uri: string, userUid: string, recipient: string, respondingToImageName: string, respondingToImageUrl: string) {
   return new Promise(async (resolve, reject) => {
@@ -139,7 +142,7 @@ export default function ReviewPhoto(): React.JSX.Element {
         </TouchableOpacity>
         <TouchableOpacity onPress={sendPhoto} style={styles.sendButton}>
           {loading ? (
-            <ActivityIndicator size={"large"} color="black" />
+            <ActivityIndicator size={"small"} color="black" />
           ) : (
             <MaterialCommunityIcons name="send" size={34} color="black" />
           )}
@@ -162,8 +165,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "flex-end",
     // width: '100%',
-    marginHorizontal: 16,
-    marginBottom: 16,
+    marginHorizontal: marginHorizontal(),
+    marginBottom: Platform.OS === "ios" ? 30 : 20,
   },
   image: {
     borderRadius: 5,
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 10,
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.red,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 16,
@@ -191,3 +194,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+function marginHorizontal() {
+  console.log('windowWidth:', windowWidth)
+  console.log('Platform.OS:', Platform.OS)
+  if (windowWidth < 500) {
+    if (Platform.OS === 'ios') {
+      return 28
+    } else {
+      return 18
+    }
+  } else {
+    console.log('window width is greater than 500')
+    return 160
+  }
+}

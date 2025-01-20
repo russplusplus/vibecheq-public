@@ -1,26 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator, Image, PermissionsAndroid, Dimensions } from 'react-native'
 import { Styles, Colors } from '../lib/constants'
-// import { supabase } from '../lib/supabase'
 import { Camera, CameraType } from 'expo-camera';
-
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-
 import Logout from './Logout'
 import LoadingModal from './LoadingModal'
-
 import { useContainerContext } from './ContainerContext'
-
 import { getUserData } from '../lib/utils'
 
-console.log('Platform:', Platform)
+const log = console.log.bind(console)
+
+log('Platform:', Platform)
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
-console.log('windowHeight:', windowHeight)
-console.log('windowWidth:', windowWidth)
+log('windowHeight:', windowHeight)
+log('windowWidth:', windowWidth)
 
 export default function CameraPage() {
 
@@ -39,7 +36,7 @@ export default function CameraPage() {
   }
 
   function toggleCameraType() {
-    console.log('in toggleCameraType')
+    log('in toggleCameraType')
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back))
   }
 
@@ -54,11 +51,18 @@ export default function CameraPage() {
 
   async function init() {
     if (!user) {
-      console.log('user not found')
+      log('user not found')
       return
     }
-    console.log('in init(). user:', user)
-    const data = await getUserData(user.user.uid)
+    log('in init(). user:', user)
+    const data = await getUserData(user.user.uid).catch((err) => {
+      log('err:', err)
+      if (err === 'user data not found') {
+        log('first time login detected')
+      }
+      return
+    })
+    log('data:', data)
     setUserData(data)
   }
 

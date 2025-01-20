@@ -89,6 +89,17 @@ export default function Auth() {
     setLoading(true)
    
     const user = await confirm.confirm(password)
+      .catch((err) => {
+        console.log('err:', err)
+      })
+
+    if (!user) {
+      setError("code is invalid")
+      setLoading(false)
+      return
+    }
+    console.log('user:', user)
+
     const { uid } = user.user
     console.log('code is valid! user:', user)
     await updateRegistrationToken(uid)
@@ -110,7 +121,7 @@ export default function Auth() {
         source={require('../assets/title.png')}
         style={styles.title}
       />
-      <Text style={{ color: Colors.orange, fontSize: Styles.fontNormal, marginBottom: 4 }}>{error}</Text>
+      <Text style={{ color: Colors.red, fontSize: Styles.fontNormal, marginBottom: 4 }}>{error}</Text>
       {passcodeSent ?
         <>
           <View style={styles.inputContainer}>
@@ -239,7 +250,7 @@ const styles = StyleSheet.create({
     marginTop: getTopMargin(windowHeight),
     marginBottom: 6,
     width: '100%',
-    height: windowHeight > 1100 ? 250 : 140
+    height: getTitleHeight(windowHeight)
   },
   inputLabel: { 
     color: Colors.white, 
@@ -282,5 +293,15 @@ function getTopMargin(height: number) {
     return 350
   } else {
     return 400
+  }
+}
+
+function getTitleHeight(height: number) {
+  if (height > 1100) {
+    return 250
+  } else if (height > 900) {
+    return 140
+  } else {
+    return 100
   }
 }
