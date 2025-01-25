@@ -4,7 +4,7 @@ import { Styles, Colors } from '../lib/constants'
 
 
 export default function LoadingModal({
-    loading
+    isLoading
 }) {
 
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function LoadingModal({
     return (
         <Modal
             transparent={true}
-            visible={loading}
+            visible={isLoading}
             style={styles.modal}
             statusBarTranslucent
         >

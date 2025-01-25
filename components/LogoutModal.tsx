@@ -6,8 +6,8 @@ import { useContainerContext } from './ContainerContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
-export default function Logout({
-    logoutMode,
+export default function LogoutModal({
+    isLogoutMode,
     setLogoutMode
 }) {
     const { user, setUser } = useContainerContext()
@@ -22,7 +22,7 @@ export default function Logout({
         <Modal
             animationType="slide"
             transparent={true}
-            visible={logoutMode}
+            visible={isLogoutMode}
             style={styles.modal}
             statusBarTranslucent
         >
@@ -39,7 +39,7 @@ export default function Logout({
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.noButton}
-                        onPress={() => setLogoutMode(!logoutMode)}
+                        onPress={() => setLogoutMode(!isLogoutMode)}
                     >
                         <Text style={{fontSize: Styles.fontNormal}}>No</Text>
                     </TouchableOpacity>

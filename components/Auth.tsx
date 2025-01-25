@@ -36,46 +36,10 @@ export default function Auth() {
 
   const { user, setUser } = useContainerContext()
 
-  async function updateRegistrationToken(uid: string) {
-    console.log('in updateRegistrationToken. uid:', uid)
-    // await messaging().registerDeviceForRemoteMessages()
-    const authorizationStatus = await messaging().requestPermission()
-    console.log('authorizationStatus:', authorizationStatus)
-    if (authorizationStatus !== messaging.AuthorizationStatus.AUTHORIZED && authorizationStatus !== messaging.AuthorizationStatus.PROVISIONAL) {
-      return
-    }
-    const registrationToken: string = await messaging().getToken()
-    console.log('registrationToken:', registrationToken)
-    try {
-      await database()
-      .ref(`registrationTokens/${uid}`)
-      .update({
-        registrationToken
-      })
-    } catch (err) {
-      console.log(err)
-    }
-    
-  }
-
   async function sendOtp() {
     setLoading(true)
     const fullPhoneNumber = selectedCountry?.callingCode + ' ' + phoneNumber
     console.log('in sendOtp. fullPhoneNumber:', fullPhoneNumber)
-
-    // const { data, error } = await supabase.auth.signInWithOtp({
-    //   phone: selectedCountry?.callingCode + phone,
-    // })
-    // if (error) {
-    //   if (error.message?.includes('Invalid phone number') || error.message?.includes("Invalid 'To' Phone Number")) {
-    //     setError('Please enter a valid phone number')
-    //   } else {
-    //     setError('An error occurred')
-    //   }
-    //   setLoading(false)
-    //   console.log(error.message)
-    //   return
-    // }
 
     const confirmation = await auth().signInWithPhoneNumber(fullPhoneNumber);
     console.log('confirmation:', confirmation)
@@ -109,6 +73,31 @@ export default function Auth() {
     setLoading(false)
     setError('')
   }
+
+  async function updateRegistrationToken(uid: string) {
+    console.log('in updateRegistrationToken. uid:', uid)
+    // const registerResponse = await messaging().registerDeviceForRemoteMessages().catch((err) => {
+    //   console.log('registerDeviceForRemoteMessages err:', err)
+    // })
+    // console.log('registerResponse:', registerResponse)
+    const authorizationStatus = await messaging().requestPermission()
+    console.log('authorizationStatus:', authorizationStatus)
+    if (authorizationStatus !== messaging.AuthorizationStatus.AUTHORIZED && authorizationStatus !== messaging.AuthorizationStatus.PROVISIONAL) {
+      return
+    }
+    const registrationToken: string = await messaging().getToken()
+    console.log('registrationToken:', registrationToken)
+    try {
+      await database()
+      .ref(`registrationTokens/${uid}`)
+      .update({
+        registrationToken
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  
 
   useEffect(() => {
     console.log('rendered Auth')

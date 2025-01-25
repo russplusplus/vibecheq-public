@@ -5,8 +5,9 @@ import { Camera, CameraType } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import Logout from './Logout'
+import LogoutModal from './LogoutModal'
 import LoadingModal from './LoadingModal'
+import WelcomeModal from './WelcomeModal'
 import { useContainerContext } from './ContainerContext'
 import { getUserData } from '../lib/utils'
 
@@ -22,8 +23,9 @@ log('windowWidth:', windowWidth)
 export default function CameraPage() {
 
   const [type, setType] = useState(CameraType.back)
-  const [logoutMode, setLogoutMode] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [isLogoutMode, setLogoutMode] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false)
+  const [isWelcomeMode, setWelcomeMode] = useState<boolean>(false)
   const [isInboxLoading, setIsInboxLoading] = useState<boolean>(false)
   const cameraRef = useRef<Camera>(null)
 
@@ -55,10 +57,16 @@ export default function CameraPage() {
       return
     }
     log('in init(). user:', user)
+
+    if (user.additionalUserInfo.isNewUser) {
+      log('new user detected')
+
+    }
+
     const data = await getUserData(user.user.uid).catch((err) => {
       log('err:', err)
       if (err === 'user data not found') {
-        log('first time login detected')
+        log('user data not found')
       }
       return
     })
@@ -86,11 +94,15 @@ export default function CameraPage() {
       style={styles.container}
     >
       <LoadingModal
-        loading={loading}
+        isLoading={isLoading}
       />
-      <Logout
-        logoutMode={logoutMode}
+      <LogoutModal
+        isLogoutMode={isLogoutMode}
         setLogoutMode={setLogoutMode}
+      />
+      <WelcomeModal
+        isWelcomeMode={isWelcomeMode}
+        setWelcomeMode={setWelcomeMode}
       />
       <Camera
         style={styles.camera}
