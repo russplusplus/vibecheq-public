@@ -23,20 +23,28 @@ export default function WelcomeModal({
         >
             <View style={styles.container}>
                 <View style={styles.modalContainer}>
-                    <Text style={styles.text}>Welcome to Vibecheq!</Text>
+                    <Text style={styles.title}>Welcome to Vibecheq!</Text>
+                    <Text style={styles.text}>Here's how it works:</Text>
+                    <View style={styles.bulletContainer}>
+                        <Text style={styles.bullet}>-</Text>
+                        <Text style={styles.bullet}>All photos you send will go to randomly-selected recipients.</Text>
+                    </View>
+                    <View style={styles.bulletContainer}>
+                        <Text style={styles.bullet}>-</Text>
+                        <Text style={styles.bullet}>View your inbox (bottom right) to see responses to your photos, as well as photos you receive randomly.</Text>
+                    </View>
+                    <View style={styles.bulletContainer}>
+                        <Text style={styles.bullet}>-</Text>
+                        <Text style={styles.bullet}>All exchanges are anonymous.</Text>
+                    </View>
+
+
+
                     <TouchableOpacity
-                        style={styles.yesButton}
-                        // onPress={() => {
-                        //     signOut()
-                        // }}
-                    >
-                        <Text style={{fontSize: Styles.fontNormal}}>Yes</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.noButton}
+                        style={styles.button}
                         // onPress={() => setLogoutMode(!logoutMode)}
                     >
-                        <Text style={{fontSize: Styles.fontNormal}}>No</Text>
+                        <Text style={{fontSize: Styles.fontNormal}}>Start</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -62,30 +70,37 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 8
     },
+    title: {
+        fontSize: Styles.fontNormal,
+        fontWeight: 'bold',
+        color: Colors.white,
+        marginBottom: 30
+    },
     text: {
         fontSize: Styles.fontNormal,
-        color: Colors.white
+        color: Colors.white,
+        textAlign: 'left',
+        width: '90%',
+        marginBottom: 20
     },
-    yesButton: {
-        marginTop: 20,
+    bulletContainer: {
+        display: 'flex', 
+        flexDirection: 'row', 
+        width: '90%'
+    },
+    bullet: {
+        fontSize: Styles.fontNormal,
+        color: Colors.white,
+        textAlign: 'left',
+        marginBottom: 20
+    },
+    button: {
+        marginTop: 30,
         paddingVertical: 4,
         paddingHorizontal: 4,
         width: 250,
         height: 38,
-        backgroundColor: Colors.red,
-        alignItems: 'center',
-        fontSize: Styles.fontLarge,
-        borderRadius: 8,
-        flexDirection: 'column',
-        justifyContent: 'center'
-    },
-    noButton: {
-        marginTop: 20,
-        paddingVertical: 4,
-        paddingHorizontal: 4,
-        width: 250,
-        height: 38,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         alignItems: 'center',
         fontSize: Styles.fontLarge,
         borderRadius: 8,

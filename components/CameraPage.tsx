@@ -60,7 +60,7 @@ export default function CameraPage() {
 
     if (user.additionalUserInfo.isNewUser) {
       log('new user detected')
-
+      setWelcomeMode(true)
     }
 
     const data = await getUserData(user.user.uid).catch((err) => {
