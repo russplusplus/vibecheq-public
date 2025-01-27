@@ -42,7 +42,7 @@ export default function WelcomeModal({
 
                     <TouchableOpacity
                         style={styles.button}
-                        // onPress={() => setLogoutMode(!logoutMode)}
+                        onPress={() => setWelcomeMode(false)}
                     >
                         <Text style={{fontSize: Styles.fontNormal}}>Start</Text>
                     </TouchableOpacity>
