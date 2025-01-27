@@ -1,27 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator, Image, PermissionsAndroid } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator, Image, PermissionsAndroid, Dimensions } from 'react-native'
 import { Styles, Colors } from '../lib/constants'
-// import { supabase } from '../lib/supabase'
 import { Camera, CameraType } from 'expo-camera';
-
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-
-import Logout from './Logout'
+import LogoutModal from './LogoutModal'
 import LoadingModal from './LoadingModal'
-
+import WelcomeModal from './WelcomeModal'
 import { useContainerContext } from './ContainerContext'
-
 import { getUserData } from '../lib/utils'
 
-console.log('Platform:', Platform)
+const log = console.log.bind(console)
+
+log('Platform:', Platform)
+
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
+log('windowHeight:', windowHeight)
+log('windowWidth:', windowWidth)
 
 export default function CameraPage() {
 
   const [type, setType] = useState(CameraType.back)
-  const [logoutMode, setLogoutMode] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [isLogoutMode, setLogoutMode] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false)
+  const [isWelcomeMode, setWelcomeMode] = useState<boolean>(false)
   const [isInboxLoading, setIsInboxLoading] = useState<boolean>(false)
   const cameraRef = useRef<Camera>(null)
 
@@ -34,7 +38,7 @@ export default function CameraPage() {
   }
 
   function toggleCameraType() {
-    console.log('in toggleCameraType')
+    log('in toggleCameraType')
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back))
   }
 
@@ -49,11 +53,24 @@ export default function CameraPage() {
 
   async function init() {
     if (!user) {
-      console.log('user not found')
+      log('user not found')
       return
     }
-    console.log('in init(). user:', user)
-    const data = await getUserData(user.user.uid)
+    log('in init(). user:', user)
+
+    if (user.additionalUserInfo.isNewUser) {
+      log('new user detected')
+      setWelcomeMode(true)
+    }
+
+    const data = await getUserData(user.user.uid).catch((err) => {
+      log('err:', err)
+      if (err === 'user data not found') {
+        log('user data not found')
+      }
+      return
+    })
+    log('data:', data)
     setUserData(data)
   }
 
@@ -77,11 +94,15 @@ export default function CameraPage() {
       style={styles.container}
     >
       <LoadingModal
-        loading={loading}
+        isLoading={isLoading}
       />
-      <Logout
-        logoutMode={logoutMode}
+      <LogoutModal
+        isLogoutMode={isLogoutMode}
         setLogoutMode={setLogoutMode}
+      />
+      <WelcomeModal
+        isWelcomeMode={isWelcomeMode}
+        setWelcomeMode={setWelcomeMode}
       />
       <Camera
         style={styles.camera}
@@ -166,7 +187,7 @@ const styles = StyleSheet.create({
   topButtons: {
     flex: 0.2,
     flexDirection: 'row',
-    marginHorizontal: Platform.OS === "ios" ? 128 : 118,
+    marginHorizontal: marginHorizontal(),
     marginTop: Platform.OS === "ios" ? 42 : 36,
     justifyContent: 'space-between'
   },
@@ -175,7 +196,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: Platform.OS === "ios" ? 128 : 118,
+    marginHorizontal: marginHorizontal(),
     marginBottom: Platform.OS === "ios" ? 30 : 20,
   },
   bottomTopButtons: {
@@ -228,3 +249,18 @@ const styles = StyleSheet.create({
     color: "black"
   }
 })
+
+function marginHorizontal() {
+  console.log('windowWidth:', windowWidth)
+  console.log('Platform.OS:', Platform.OS)
+  if (windowWidth < 500) {
+    if (Platform.OS === 'ios') {
+      return 128
+    } else {
+      return 118
+    }
+  } else {
+    console.log('window width is greater than 500')
+    return 260
+  }
+}

@@ -6,8 +6,8 @@ import { useContainerContext } from './ContainerContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
-export default function Logout({
-    logoutMode,
+export default function LogoutModal({
+    isLogoutMode,
     setLogoutMode
 }) {
     const { user, setUser } = useContainerContext()
@@ -22,7 +22,7 @@ export default function Logout({
         <Modal
             animationType="slide"
             transparent={true}
-            visible={logoutMode}
+            visible={isLogoutMode}
             style={styles.modal}
             statusBarTranslucent
         >
@@ -30,7 +30,7 @@ export default function Logout({
                 <View style={styles.modalContainer}>
                     <Text style={styles.text}>Log out?</Text>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.yesButton}
                         onPress={() => {
                             signOut()
                         }}
@@ -38,8 +38,8 @@ export default function Logout({
                         <Text style={{fontSize: Styles.fontNormal}}>Yes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => setLogoutMode(!logoutMode)}
+                        style={styles.noButton}
+                        onPress={() => setLogoutMode(!isLogoutMode)}
                     >
                         <Text style={{fontSize: Styles.fontNormal}}>No</Text>
                     </TouchableOpacity>
@@ -71,7 +71,20 @@ const styles = StyleSheet.create({
         fontSize: Styles.fontNormal,
         color: Colors.white
     },
-    button: {
+    yesButton: {
+        marginTop: 20,
+        paddingVertical: 4,
+        paddingHorizontal: 4,
+        width: 250,
+        height: 38,
+        backgroundColor: Colors.red,
+        alignItems: 'center',
+        fontSize: Styles.fontLarge,
+        borderRadius: 8,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    noButton: {
         marginTop: 20,
         paddingVertical: 4,
         paddingHorizontal: 4,
@@ -83,5 +96,5 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         flexDirection: 'column',
         justifyContent: 'center'
-      }
+    }
 })

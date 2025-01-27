@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator } from 'react-native'
+import { 
+  Dimensions, 
+  StyleSheet, 
+  View, 
+  TouchableOpacity, 
+  Text, 
+  Platform, 
+  TextInput, 
+  ActivityIndicator, 
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
+} from 'react-native'
 import { Image } from 'expo-image'
 import { Styles, Colors } from '../lib/constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -24,28 +36,6 @@ export default function Auth() {
 
   const { user, setUser } = useContainerContext()
 
-  async function updateRegistrationToken(uid: string) {
-    console.log('in updateRegistrationToken. uid:', uid)
-    // await messaging().registerDeviceForRemoteMessages()
-    const authorizationStatus = await messaging().requestPermission()
-    console.log('authorizationStatus:', authorizationStatus)
-    if (authorizationStatus !== messaging.AuthorizationStatus.AUTHORIZED && authorizationStatus !== messaging.AuthorizationStatus.PROVISIONAL) {
-      return
-    }
-    const registrationToken: string = await messaging().getToken()
-    console.log('registrationToken:', registrationToken)
-    try {
-      await database()
-      .ref(`registrationTokens/${uid}`)
-      .update({
-        registrationToken
-      })
-    } catch (err) {
-      console.log(err)
-    }
-    
-  }
-
   async function sendOtp() {
     setLoading(true)
     const fullPhoneNumber = selectedCountry?.callingCode + ' ' + phoneNumber
@@ -63,7 +53,16 @@ export default function Auth() {
     setLoading(true)
     
     const user = await confirm.confirm(password)
-    // TODO: HANDLE INCORRECT CODES HERE
+      .catch((err) => {
+        console.log('err:', err)
+      })
+
+    if (!user) {
+      setError("code is invalid")
+      setLoading(false)
+      return
+    }
+    console.log('user:', user)
 
     const { uid } = user.user
     console.log('code is valid! user:', user)
@@ -75,17 +74,43 @@ export default function Auth() {
     setError('')
   }
 
+  async function updateRegistrationToken(uid: string) {
+    console.log('in updateRegistrationToken. uid:', uid)
+    // const registerResponse = await messaging().registerDeviceForRemoteMessages().catch((err) => {
+    //   console.log('registerDeviceForRemoteMessages err:', err)
+    // })
+    // console.log('registerResponse:', registerResponse)
+    const authorizationStatus = await messaging().requestPermission()
+    console.log('authorizationStatus:', authorizationStatus)
+    if (authorizationStatus !== messaging.AuthorizationStatus.AUTHORIZED && authorizationStatus !== messaging.AuthorizationStatus.PROVISIONAL) {
+      return
+    }
+    const registrationToken: string = await messaging().getToken()
+    console.log('registrationToken:', registrationToken)
+    try {
+      await database()
+      .ref(`registrationTokens/${uid}`)
+      .update({
+        registrationToken
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  
+
   useEffect(() => {
     console.log('rendered Auth')
   })
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
+      <>
       <Image
         source={require('../assets/title.png')}
         style={styles.title}
       />
-      <Text style={{ color: Colors.orange, fontSize: Styles.fontNormal, marginBottom: 4 }}>{error}</Text>
+      <Text style={{ color: Colors.red, fontSize: Styles.fontNormal, marginBottom: 4 }}>{error}</Text>
       {passcodeSent ?
         <>
           <View style={styles.inputContainer}>
@@ -111,32 +136,38 @@ export default function Auth() {
           </View>
         </>
         :
-        <>
-          <View style={styles.inputContainer}>
-            <PhoneInput
-              phoneInputStyles={phoneInputStyles}
-              modalStyles={modalStyles}
-              onChangePhoneNumber={(value: string) => setPhoneNumber(value)}
-              value={phoneNumber}
-              selectedCountry={selectedCountry}
-              onChangeSelectedCountry={(value: ICountry) => setSelectedCountry(value)}
-              defaultCountry='US'
-              placeholder='phone number'
-            />
-          </View>
-          <View >
-            <TouchableOpacity
-              onPress={() => sendOtp()}
-              style={styles.button}
-            >
-              {loading 
-              ? <ActivityIndicator size="small" color='black' /> 
-              : <Text style={{ fontSize: Styles.fontNormal }}>Send passcode</Text>
-              }
-            </TouchableOpacity>
-          </View>
-        </>
+        <TouchableWithoutFeedback onPress={() => {
+          console.log('touch anywhere')
+          Keyboard.dismiss
+        }}>
+          <>
+            <View style={styles.inputContainer}>
+              <PhoneInput
+                phoneInputStyles={phoneInputStyles}
+                modalStyles={modalStyles}
+                onChangePhoneNumber={(value: string) => setPhoneNumber(value)}
+                value={phoneNumber}
+                selectedCountry={selectedCountry}
+                onChangeSelectedCountry={(value: ICountry) => setSelectedCountry(value)}
+                defaultCountry='US'
+                placeholder='phone number'
+              />
+            </View>
+            <View >
+              <TouchableOpacity
+                onPress={sendOtp}
+                style={styles.button}
+              >
+                {loading 
+                ? <ActivityIndicator size="small" color='black' /> 
+                : <Text style={{ fontSize: Styles.fontNormal }}>Send passcode</Text>
+                }
+              </TouchableOpacity>
+            </View>
+          </>
+        </TouchableWithoutFeedback>
       }
+      </>
     </View>
   )
 }
@@ -208,7 +239,7 @@ const styles = StyleSheet.create({
     marginTop: getTopMargin(windowHeight),
     marginBottom: 6,
     width: '100%',
-    height: 120
+    height: getTitleHeight(windowHeight)
   },
   inputLabel: { 
     color: Colors.white, 
@@ -242,11 +273,24 @@ const styles = StyleSheet.create({
 })
 
 function getTopMargin(height: number) {
+  console.log('height:', height)
   if (height < 800) {
     return 250
   } else if (height < 900) {
     return 300
-  } else {
+  } else if (height < 1100) {
     return 350
+  } else {
+    return 400
+  }
+}
+
+function getTitleHeight(height: number) {
+  if (height > 1100) {
+    return 250
+  } else if (height > 900) {
+    return 140
+  } else {
+    return 100
   }
 }

@@ -4,15 +4,25 @@ import {
   View,
   TouchableWithoutFeedback,
   ImageBackground,
-  Image
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  Platform
 } from "react-native";
 import database from "@react-native-firebase/database";
 import storage from "@react-native-firebase/storage";
 import LoadingModal from "./LoadingModal";
 import { useContainerContext } from "./ContainerContext";
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons'
+import { Styles, Colors } from '../lib/constants'
+import ViewInboxOptions from "./ViewInboxOptions";
+
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
 
 export default function ViewInbox() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [optionsMode, setOptionsMode] = useState<boolean>(false)
   const { user, setPage, respondingTo, setRespondingTo, userData } = useContainerContext();
 
   async function handlePressAnywhere() {
@@ -51,6 +61,10 @@ export default function ViewInbox() {
   return (
     <View style={styles.container}>
       <LoadingModal loading={loading} />
+      <ViewInboxOptions
+        optionsMode={optionsMode}
+        setOptionsMode={setOptionsMode}
+      />
 
       <TouchableWithoutFeedback onPress={handlePressAnywhere}>
         <ImageBackground
@@ -59,6 +73,9 @@ export default function ViewInbox() {
             uri: userData.inbox[Object.keys(userData.inbox)[0]].url,
           }}
         >
+          <TouchableOpacity onPress={() => setOptionsMode(true)} style={styles.topButtons}>
+            <SimpleLineIcons name="options" size={24} color={Colors.white} />
+          </TouchableOpacity>
           {userData.inbox[Object.keys(userData.inbox)[0]].isResponse ?
             <Image
               source={{ uri: userData.inbox[Object.keys(userData.inbox)[0]].respondingToImageUrl }}
@@ -92,4 +109,27 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 16,
   },
+  topButtons: {
+    flex: 0.5,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginTop: Platform.OS === "ios" ? 42 : 36,
+    marginHorizontal: marginHorizontal()
+  },
 });
+
+function marginHorizontal() {
+  console.log('windowWidth:', windowWidth)
+  console.log('Platform.OS:', Platform.OS)
+  if (windowWidth < 500) {
+    if (Platform.OS === 'ios') {
+      return 28
+    } else {
+      return 18
+    }
+  } else {
+    console.log('window width is greater than 500')
+    return 160
+  }
+}
+

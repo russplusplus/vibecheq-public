@@ -16,7 +16,7 @@ export default {
     ],
     "ios": {
       "googleServicesFile": process.env.GOOGLE_SERVICE_INFO_PLIST ?? "./GoogleService-Info-PROD.plist",
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.vibecheq.prod"
     },
     "android": {
