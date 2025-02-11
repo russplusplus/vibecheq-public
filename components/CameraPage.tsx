@@ -26,6 +26,7 @@ export default function CameraPage() {
   const [isLogoutMode, setLogoutMode] = useState<boolean>(false)
   const [isLoading, setLoading] = useState<boolean>(false)
   const [isWelcomeMode, setWelcomeMode] = useState<boolean>(false)
+  const [isSettingsMode, setSettingsMode] = useState<boolean>(false)
   const [isInboxLoading, setIsInboxLoading] = useState<boolean>(false)
   const cameraRef = useRef<Camera>(null)
 
@@ -104,6 +105,10 @@ export default function CameraPage() {
         isWelcomeMode={isWelcomeMode}
         setWelcomeMode={setWelcomeMode}
       />
+      <SettingsModal
+        isSettingsMode={isSettingsMode}
+        setSettingsMode={setSettingsMode}
+      />
       <Camera
         style={styles.camera}
         type={type}
@@ -116,7 +121,7 @@ export default function CameraPage() {
           <TouchableOpacity onPress={() => setLogoutMode(true)}>
             <Ionicons name="return-down-back" size={36} color={Colors.white}  />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setSettingsMode(true)}>
             <Ionicons name="settings-outline" size={36} color={Colors.white} style={{'opacity': 0}} />
           </TouchableOpacity>
         </View>
