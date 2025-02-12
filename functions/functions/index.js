@@ -175,7 +175,8 @@ function isRecipientUidBlocked(recipient, sender) {
       })
 
     const blockList = blockListSnapshot.val()
-    const blockListArr = Object.keys(blockList)
+    console.log("blockList:", blockList)
+    const blockListArr = blockList ? Object.keys(blockList) : []
     console.log('blockListArr:', blockListArr)
 
     if (blockListArr.includes(sender)) {

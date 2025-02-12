@@ -23,6 +23,8 @@ import database from '@react-native-firebase/database';
 
 import { useContainerContext } from './ContainerContext'
 
+const log = console.log.bind(console)
+
 const windowHeight = Dimensions.get('window').height
 
 export default function Auth() {

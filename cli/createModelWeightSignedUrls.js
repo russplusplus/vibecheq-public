@@ -1,12 +1,12 @@
 const admin = require('firebase-admin');
 const { Storage } = require('@google-cloud/storage');
-const gcs = new Storage({keyFilename: '../functions/functions/service-account-PROD.json'});
+const gcs = new Storage({keyFilename: '../functions/functions/service-account.json'});
 
 // createModelWeightSignedUrls(51)
 createModelJSONUrl()
 
 async function createModelWeightSignedUrls(numberOfShards) {
-  const bucket = gcs.bucket("vibecheq-prod.appspot.com");
+  const bucket = gcs.bucket("vibecheq-dev-d930b.appspot.com");
 
   // created signedUrls for each shard file
   let weightUrls = {}
@@ -23,7 +23,7 @@ async function createModelWeightSignedUrls(numberOfShards) {
 }
 
 async function createModelJSONUrl() {
-  const bucket = gcs.bucket("vibecheq-prod.appspot.com");
+  const bucket = gcs.bucket("vibecheq-dev-d930b.appspot.com");
 
   const modelFile = bucket.file(`model/model.json`)
   const modelUrlArr = await modelFile.getSignedUrl({

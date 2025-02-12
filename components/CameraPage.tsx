@@ -8,6 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import LogoutModal from './LogoutModal'
 import LoadingModal from './LoadingModal'
 import WelcomeModal from './WelcomeModal'
+import SettingsModal from './SettingsModal'
 import { useContainerContext } from './ContainerContext'
 import { getUserData } from '../lib/utils'
 
@@ -119,10 +120,10 @@ export default function CameraPage() {
           style={styles.topButtons}
         >
           <TouchableOpacity onPress={() => setLogoutMode(true)}>
-            <Ionicons name="return-down-back" size={36} color={Colors.white}  />
+            <Ionicons name="return-down-back" size={36} color={Colors.white} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setSettingsMode(true)}>
-            <Ionicons name="settings-outline" size={36} color={Colors.white} style={{'opacity': 0}} />
+            <Ionicons name="settings-outline" size={36} color={Colors.white} />
           </TouchableOpacity>
         </View>
         <View
