@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput, ActivityIndicator, Image, PermissionsAndroid, Dimensions } from 'react-native'
 import { Styles, Colors } from '../lib/constants'
-import { Camera, CameraType } from 'expo-camera';
+import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -23,30 +23,31 @@ log('windowWidth:', windowWidth)
 
 export default function CameraPage() {
 
-  const [type, setType] = useState(CameraType.back)
+  const [facing, setFacing] = useState<CameraType>('back')
   const [isLogoutMode, setLogoutMode] = useState<boolean>(false)
   const [isLoading, setLoading] = useState<boolean>(false)
   const [isWelcomeMode, setWelcomeMode] = useState<boolean>(false)
   const [isSettingsMode, setSettingsMode] = useState<boolean>(false)
   const [isInboxLoading, setIsInboxLoading] = useState<boolean>(false)
-  const cameraRef = useRef<Camera>(null)
+  const [permission, requestPermission] = useCameraPermissions()
+  const cameraRef = useRef<CameraView>(null)
 
   const { user, setCapturedImageUri, setPage, userData, setUserData, respondingTo, setRespondingTo } = useContainerContext()
 
-  const [cameraPermission, requestCameraPermission] = Camera.useCameraPermissions()
+  // const [cameraPermission, requestCameraPermission] = Camera.useCameraPermissions()
 
-  if (!cameraPermission?.granted) {
-    requestCameraPermission()
+  if (!permission) {
+    requestPermission()
   }
 
   function toggleCameraType() {
     log('in toggleCameraType')
-    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back))
+    setFacing(current => (current === 'back' ? 'front' : 'back'))
   }
 
   async function takePhoto() {
     setLoading(true)
-    if (!cameraRef) return
+    // if (!cameraRef) return
     const photo = await cameraRef.current.takePictureAsync()
     setCapturedImageUri(photo.uri)
     setLoading(false)
@@ -110,10 +111,10 @@ export default function CameraPage() {
         isSettingsMode={isSettingsMode}
         setSettingsMode={setSettingsMode}
       />
-      <Camera
+      <CameraView
         style={styles.camera}
-        type={type}
         ref={cameraRef}
+        facing={facing}
         onMountError={(err) => console.log('onMountError:', err)}
       >
         <View
@@ -170,7 +171,7 @@ export default function CameraPage() {
             }
           </View>
         </View>
-      </Camera>
+      </CameraView>
     </View>
   )
 }
