@@ -39,11 +39,12 @@ export default function Auth() {
   const { user, setUser } = useContainerContext()
 
   async function sendOtp() {
+    log('in sendOtp')
     setLoading(true)
     const fullPhoneNumber = selectedCountry?.callingCode + ' ' + phoneNumber
     console.log('in sendOtp. fullPhoneNumber:', fullPhoneNumber)
 
-    const confirmation = await auth().signInWithPhoneNumber(fullPhoneNumber);
+    const confirmation = await auth().signInWithPhoneNumber(fullPhoneNumber).catch((err) => log(err))
     console.log('confirmation:', confirmation)
     setConfirm(confirmation)
     setPasscodeSent(true)
