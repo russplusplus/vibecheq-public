@@ -15,13 +15,12 @@ import {
 import { Image } from 'expo-image'
 import { Styles, Colors } from '../lib/constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
 import PhoneInput, { ICountry } from 'react-native-international-phone-number'
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import database from '@react-native-firebase/database';
-
 import { useContainerContext } from './ContainerContext'
+import { recordError } from '../lib/utils'
 
 const log = console.log.bind(console)
 
@@ -44,8 +43,18 @@ export default function Auth() {
     const fullPhoneNumber = selectedCountry?.callingCode + ' ' + phoneNumber
     console.log('in sendOtp. fullPhoneNumber:', fullPhoneNumber)
 
-    const confirmation = await auth().signInWithPhoneNumber(fullPhoneNumber).catch((err) => log(err))
+    const confirmation = await auth().signInWithPhoneNumber(fullPhoneNumber).catch((err) => {
+      const errString = err.toString()
+      log('errString:', errString)
+      if (errString.includes('blocked')) {
+        setError('Too many requests. Try again later.')
+      }
+      setLoading(false)
+      recordError(err)
+      return
+    })
     console.log('confirmation:', confirmation)
+    if (!confirmation) return
     setConfirm(confirmation)
     setPasscodeSent(true)
     setLoading(false)
@@ -58,6 +67,7 @@ export default function Auth() {
     const user = await confirm.confirm(password)
       .catch((err) => {
         console.log('err:', err)
+        recordError(err)
       })
 
     if (!user) {
