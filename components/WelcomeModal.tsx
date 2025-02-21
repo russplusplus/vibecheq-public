@@ -1,18 +1,10 @@
-// import React, { useEffect } from 'react'
-import { Modal, View, TouchableOpacity, Text, Alert, StyleSheet } from 'react-native'
-// import { supabase } from '../lib/supabase'
+import { Modal, View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { Styles, Colors } from '../lib/constants'
-import { useContainerContext } from './ContainerContext'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
 
 export default function WelcomeModal({
     isWelcomeMode,
     setWelcomeMode
 }) {
-    // const { user, setUser } = useContainerContext()
-
-
     return (
         <Modal
             animationType="slide"
@@ -26,20 +18,17 @@ export default function WelcomeModal({
                     <Text style={styles.title}>Welcome to Vibecheq!</Text>
                     <Text style={styles.text}>Here's how it works:</Text>
                     <View style={styles.bulletContainer}>
-                        <Text style={styles.bullet}>-</Text>
+                        {/* <Text style={styles.bullet}>-</Text> */}
                         <Text style={styles.bullet}>All photos you send will go to randomly-selected recipients.</Text>
                     </View>
                     <View style={styles.bulletContainer}>
-                        <Text style={styles.bullet}>-</Text>
+                        {/* <Text style={styles.bullet}>-</Text> */}
                         <Text style={styles.bullet}>View your inbox (bottom right) to see responses to your photos, as well as photos you receive randomly.</Text>
                     </View>
                     <View style={styles.bulletContainer}>
-                        <Text style={styles.bullet}>-</Text>
+                        {/* <Text style={styles.bullet}>-</Text> */}
                         <Text style={styles.bullet}>All exchanges are anonymous.</Text>
                     </View>
-
-
-
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => setWelcomeMode(false)}

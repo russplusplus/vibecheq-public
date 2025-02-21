@@ -34,8 +34,6 @@ export default function CameraPage() {
 
   const { user, setCapturedImageUri, setPage, userData, setUserData, respondingTo, setRespondingTo } = useContainerContext()
 
-  // const [cameraPermission, requestCameraPermission] = Camera.useCameraPermissions()
-
   if (!permission) {
     requestPermission()
   }
@@ -61,15 +59,16 @@ export default function CameraPage() {
     }
     log('in init(). user:', user)
 
-    if (user.additionalUserInfo.isNewUser) {
-      log('new user detected')
-      setWelcomeMode(true)
-    }
+    // if (user.additionalUserInfo.isNewUser) {
+    //   log('new user detected')
+    //   setWelcomeMode(true)
+    // }
 
     const data = await getUserData(user.user.uid).catch((err) => {
       log('err:', err)
       if (err === 'user data not found') {
-        log('user data not found')
+        log('user data not found. First login detected')
+        setWelcomeMode(true)
       }
       return
     })
