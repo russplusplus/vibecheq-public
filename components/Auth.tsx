@@ -48,6 +48,8 @@ export default function Auth() {
       log('errString:', errString)
       if (errString.includes('blocked')) {
         setError('Too many requests. Try again later.')
+      } else {
+        setError('An unknown error occurred.')
       }
       setLoading(false)
       recordError(err)
@@ -68,13 +70,17 @@ export default function Auth() {
       .catch((err) => {
         console.log('err:', err)
         recordError(err)
+        const errString = err.toString()
+        if (errString.includes('invalid')) {
+          setError('Invalid code.')
+          setLoading(false)
+        } else if (errString.includes('expired')) {
+          setError('This code is expired.')
+        } else {
+          setError('An unknown error occurred.')
+        }
       })
 
-    if (!user) {
-      setError("code is invalid")
-      setLoading(false)
-      return
-    }
     console.log('user:', user)
 
     const { uid } = user.user
@@ -89,10 +95,6 @@ export default function Auth() {
 
   async function updateRegistrationToken(uid: string) {
     console.log('in updateRegistrationToken. uid:', uid)
-    // const registerResponse = await messaging().registerDeviceForRemoteMessages().catch((err) => {
-    //   console.log('registerDeviceForRemoteMessages err:', err)
-    // })
-    // console.log('registerResponse:', registerResponse)
     const authorizationStatus = await messaging().requestPermission()
     console.log('authorizationStatus:', authorizationStatus)
     if (authorizationStatus !== messaging.AuthorizationStatus.AUTHORIZED && authorizationStatus !== messaging.AuthorizationStatus.PROVISIONAL) {
@@ -107,7 +109,8 @@ export default function Auth() {
         registrationToken
       })
     } catch (err) {
-      console.log(err)
+      log(err)
+      recordError(err)
     }
   }
   

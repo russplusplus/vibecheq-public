@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "670048616046-a5j05rb5komkov2icdv5vnd5677oqhrh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vibecheq.prod",
+            "certificate_hash": "3947898db8dd45cd7cfe73a6e2a9d8ac11ccf516"
+          }
+        },
+        {
+          "client_id": "670048616046-hgeqhupc0lb1r9rispsinu8qn36ihl72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vibecheq.prod",
+            "certificate_hash": "1073039bef6f57c5bed80b4aff6b10dafab3bb53"
+          }
+        },
+        {
+          "client_id": "670048616046-mlmiusee4sr0vj5hpdut96mhgn9grvko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vibecheq.prod",
+            "certificate_hash": "97893434c16f9ed9d0bd154ffa398c34ecd0c4ec"
+          }
+        },
+        {
           "client_id": "670048616046-c2ekvq0h24ug2me9q9iuj7e86ldpq7q8.apps.googleusercontent.com",
           "client_type": 3
         }

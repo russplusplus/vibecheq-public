@@ -10,7 +10,7 @@
     "build": "expo prebuild",
     "create-weight-urls": "node cli/createModelWeightSignedUrls.js",
     "get-android-keys": "cd android && ./gradlew signingReport && cd ..",
-    "eas-build": "eas build"
+    "eas-build": "npx eas build"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.23.1",

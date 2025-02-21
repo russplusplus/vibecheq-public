@@ -222,7 +222,7 @@ async function sendNotification(recipientRegistrationToken, isResponse) {
   let payload = {
     notification: {
       title: isResponse ? 'New response!' : 'New Vibe!',
-      body: 'Open Vibecheq to view it',
+      body: 'Open Vibecheq to view it.',
       imageUrl: 'https://my-cdn.com/app-logo.png',
     },
     token: recipientRegistrationToken

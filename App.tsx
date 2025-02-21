@@ -11,7 +11,9 @@ import * as Notifications from 'expo-notifications'
 import { getUserData } from './lib/utils'
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log('Message handled in the background!', remoteMessage);
+  console.log('Message handled in the background!', remoteMessage)
+  // TO DO: figure out this scope issue. user isn't available here
+  // getUserData(user.user.uid)
 });
 
 const Container = () => {
