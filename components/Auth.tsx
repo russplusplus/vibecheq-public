@@ -117,8 +117,10 @@ export default function Auth() {
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log('onAuthStateChanged triggered in the background')
+        console.log('onAuthStateChanged triggered in the background. user:', user)
         setUser(user)
+        updateRegistrationToken(user.uid)
+
       } else {
         console.log('onAuthStateChanged triggered but no user detected')
       }
