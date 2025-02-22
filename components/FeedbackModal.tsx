@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Modal, View, TouchableOpacity, Text, StyleSheet, TextInput, ActivityIndicator } from 'react-native'
+import { Modal, View, TouchableOpacity, Text, StyleSheet, TextInput, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
 import { Styles, Colors } from '../lib/constants'
 import { useContainerContext } from './ContainerContext'
 import database from '@react-native-firebase/database'
@@ -14,7 +14,7 @@ export default function FeedbackModal({
     const { user, setUser } = useContainerContext()
 
     async function submit() {
-        if (isSubmitting || isSubmissionComplete) return
+        if (isSubmitting || isSubmissionComplete || !input) return
         setSubmitting(true)
 
         const today = String(new Date())
@@ -52,7 +52,7 @@ export default function FeedbackModal({
             statusBarTranslucent
         >
             <View style={styles.container}>
-                <View style={styles.modalContainer}>
+                <KeyboardAvoidingView style={styles.modalContainer}>
                     <Text style={styles.text}>What could Vibecheq improve?</Text>
                     <TextInput
                         editable
@@ -84,7 +84,7 @@ export default function FeedbackModal({
                     >
                         <Text style={{fontSize: Styles.fontNormal}}>{isSubmissionComplete ? "Back" : "Cancel"}</Text>
                     </TouchableOpacity>
-                </View>
+                </KeyboardAvoidingView>
             </View>
         </Modal>
     )
@@ -101,10 +101,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(1, 0, 0, 0.5)',
     },
     modalContainer: {
-        width: '80%',
+        width: '90%',
         height: '80%',
         backgroundColor: Colors.black,
-        // justifyContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8
     },
@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
         fontSize: Styles.fontNormal,
         color: Colors.white,
         alignSelf: 'flex-start',
-        margin: 20 
+        margin: 20,
+        fontWeight: 'bold'
     },
     input: {
         width: '90%',
