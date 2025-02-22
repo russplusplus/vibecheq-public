@@ -114,6 +114,16 @@ export default function Auth() {
     }
   }
   
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log('onAuthStateChanged triggered in the background')
+        setUser(user)
+      } else {
+        console.log('onAuthStateChanged triggered but no user detected')
+      }
+    })
+  }, [])
 
   useEffect(() => {
     console.log('rendered Auth')

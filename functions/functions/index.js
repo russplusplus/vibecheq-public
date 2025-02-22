@@ -48,7 +48,7 @@ exports.addImage = functions.runWith(runtimeOpts).storage.object('/images').onFi
 
   if (await isImageExplicit(imageUrl)) {
     console.log('image is explicit')
-    // recordImageInDatabase(imageUrl, senderUid)
+    recordImageInDatabase(imageUrl, senderUid)
     return
   }
 
