@@ -23,14 +23,18 @@ export async function getUserData(uid: string): Promise<any>  {
   })
 }
 
-export async function recordError(error) {
+export async function recordError(error, user?) {
   console.log('in logError. error:', error)
+  const dateTime = String(new Date())
+
   const newRef = database()
     .ref(`errors`)
     .push()
 
   await newRef.set({
-    err: error.toString()
+    err: error.toString(),
+    dateTime: dateTime,
+    user: user
   }).catch((err) => {
     console.log('logError err:', err)
   })

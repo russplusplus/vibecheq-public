@@ -18,7 +18,7 @@ export default function FeedbackModal({
         setSubmitting(true)
 
         const today = String(new Date())
-        const { uid } = user.user
+        const { uid } = user
         const newRef = database()
             .ref(`feedback/${uid}`)
             .push({

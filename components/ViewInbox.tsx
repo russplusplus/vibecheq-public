@@ -32,7 +32,7 @@ export default function ViewInbox() {
       return
     }
     // delete from database
-    const { uid } = user.user;
+    const { uid } = user
     const inboxImageName = Object.keys(userData.inbox)[0];
     console.log('uid:', uid)
     console.log('inboxImageName:', inboxImageName)

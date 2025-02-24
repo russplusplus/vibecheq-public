@@ -20,7 +20,7 @@ export default function ViewInboxOptions({
     const [isSenderReported, setSenderReported] = useState(false)
     const { user, setPage, respondingTo, setRespondingTo, userData } = useContainerContext();
 
-    const { uid } = user.user
+    const { uid } = user
 
     async function blockUser() {
         if (isBlockLoading || isSenderBlocked) return

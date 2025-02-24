@@ -64,7 +64,7 @@ export default function CameraPage() {
     //   setWelcomeMode(true)
     // }
 
-    const data = await getUserData(user.user.uid).catch((err) => {
+    const data = await getUserData(user.uid).catch((err) => {
       log('err:', err)
       if (err === 'user data not found') {
         log('user data not found. First login detected')

@@ -16,7 +16,8 @@ import { FontAwesome6 } from "@expo/vector-icons";
 // import { supabase } from '../lib/supabase'
 import storage from "@react-native-firebase/storage";
 import database from '@react-native-firebase/database'
-import { useContainerContext } from "./ContainerContext";
+import { useContainerContext } from "./ContainerContext"
+import { recordError } from '../lib/utils';
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
@@ -42,11 +43,15 @@ async function uploadPhoto(uri: string, userUid: string, recipient: string, resp
         },
       };
       console.log("uri:", uri);
-      const res = await ref.putFile(uri, metadata);
+      const res = await ref.putFile(uri, metadata).catch((err) => {
+        console.log('err:', err)
+        recordError(err, userUid)
+      })
 
       resolve(res);
     } catch (error) {
       console.log("error:", error);
+      recordError(error, userUid)
       reject(error);
     }
   });
@@ -66,14 +71,14 @@ export default function ReviewPhoto(): React.JSX.Element {
 
   async function sendPhoto() {
     setLoading(true);
-    console.log("sending photo");
-    console.log('user.user.uid:', user.user.uid)
+    console.log("sending photo. user:", user);
+    console.log('user.uid:', user.uid)
     let inboxImageName = respondingTo ? Object.keys(userData.inbox)[0] : ''
     let inboxImageUrl = respondingTo ? userData.inbox[Object.keys(userData.inbox)[0]].url : ''
     // "as StorageData" is a type assertion
     const storageData = await uploadPhoto(
       capturedImageUri,
-      user.user.uid,
+      user.uid,
       respondingTo,
       inboxImageName,
       inboxImageUrl
@@ -83,11 +88,11 @@ export default function ReviewPhoto(): React.JSX.Element {
 
     if (respondingTo) {
       // delete from database
-      const { uid } = user.user;
+      const { uid } = user;
       const toBeDeleted = Object.keys(userData.inbox)[0];
       console.log('uid:', uid)
       console.log('toBeDeleted:', toBeDeleted)
-      await database().ref(`userData/${uid}/inbox/${toBeDeleted}`).remove();  
+      await database().ref(`userData/${uid}/inbox/${toBeDeleted}`).remove()  
     }
 
 

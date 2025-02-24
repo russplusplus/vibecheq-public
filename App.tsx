@@ -13,7 +13,7 @@ import { getUserData } from './lib/utils'
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage)
   // TO DO: figure out this scope issue. user isn't available here
-  // getUserData(user.user.uid)
+  // getUserData(user.uid)
 });
 
 const Container = () => {
@@ -47,7 +47,7 @@ const Container = () => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('Received FCM:', remoteMessage)
       console.log('user:', user)
-      const data = await getUserData(user.user.uid)
+      const data = await getUserData(user.uid)
       setUserData(data)
     });
     return unsubscribe;

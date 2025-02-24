@@ -66,24 +66,23 @@ export default function Auth() {
   async function verifyOtp() {
     setLoading(true)
     
-    const user = await confirm.confirm(password)
-      .catch((err) => {
-        console.log('err:', err)
-        recordError(err)
-        const errString = err.toString()
-        if (errString.includes('invalid')) {
-          setError('Invalid code.')
-          setLoading(false)
-        } else if (errString.includes('expired')) {
-          setError('This code is expired.')
-        } else {
-          setError('An unknown error occurred.')
-        }
-      })
+    const user = await confirm.confirm(password).catch((err) => {
+      console.log('err:', err)
+      recordError(err)
+      const errString = err.toString()
+      if (errString.includes('invalid')) {
+        setError('Invalid code.')
+        setLoading(false)
+      } else if (errString.includes('expired')) {
+        setError('This code is expired.')
+      } else {
+        setError('An unknown error occurred.')
+      }
+    })
 
     console.log('user:', user)
 
-    const { uid } = user.user
+    const { uid } = user
     console.log('code is valid! user:', user)
     await updateRegistrationToken(uid)
     setUser(user)
