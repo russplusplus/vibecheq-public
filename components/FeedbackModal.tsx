@@ -11,16 +11,15 @@ export default function FeedbackModal({
     const [isSubmitting, setSubmitting] = useState(false)
     const [isSubmissionComplete, setSubmissionComplete] = useState(false)
     const [input, setInput] = useState("")
-    const { user, setUser } = useContainerContext()
+    const { user, setUser, userUid } = useContainerContext()
 
     async function submit() {
         if (isSubmitting || isSubmissionComplete || !input) return
         setSubmitting(true)
 
         const today = String(new Date())
-        const { uid } = user
         const newRef = database()
-            .ref(`feedback/${uid}`)
+            .ref(`feedback/${userUid}`)
             .push({
                 date: today
             })

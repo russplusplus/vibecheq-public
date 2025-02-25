@@ -32,7 +32,7 @@ export default function CameraPage() {
   const [permission, requestPermission] = useCameraPermissions()
   const cameraRef = useRef<CameraView>(null)
 
-  const { user, setCapturedImageUri, setPage, userData, setUserData, respondingTo, setRespondingTo } = useContainerContext()
+  const { user, setCapturedImageUri, setPage, userData, setUserData, respondingTo, setRespondingTo, userUid } = useContainerContext()
 
   if (!permission) {
     requestPermission()
@@ -58,13 +58,14 @@ export default function CameraPage() {
       return
     }
     log('in init(). user:', user)
+    log('userUid:', userUid)
 
     // if (user.additionalUserInfo.isNewUser) {
     //   log('new user detected')
     //   setWelcomeMode(true)
     // }
 
-    const data = await getUserData(user.uid).catch((err) => {
+    const data = await getUserData(userUid).catch((err) => {
       log('err:', err)
       if (err === 'user data not found') {
         log('user data not found. First login detected')
@@ -88,7 +89,7 @@ export default function CameraPage() {
 
   useEffect(() => {
     init()
-  }, [])
+  }, [userUid])
 
   return (
 

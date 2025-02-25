@@ -13,11 +13,11 @@ import { getUserData } from './lib/utils'
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage)
   // TO DO: figure out this scope issue. user isn't available here
-  // getUserData(user.uid)
+  // getUserData(user.user.uid)
 });
 
 const Container = () => {
-  const { user, setUser, setUserData } = useContainerContext()
+  const { user, setUser, setUserData, userUid } = useContainerContext()
 
   async function checkIfLoggedIn() {
     console.log('in checkIfLoggedIn')
@@ -47,14 +47,14 @@ const Container = () => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('Received FCM:', remoteMessage)
       console.log('user:', user)
-      const data = await getUserData(user.uid)
+      const data = await getUserData(userUid)
       setUserData(data)
     });
     return unsubscribe;
   }, []);
   
   console.log('in App.tsx. user:', user)
-  return user ? <PageRouter /> : <Auth />
+  return user && userUid ? <PageRouter /> : <Auth />
 }
 
 export default function App() {

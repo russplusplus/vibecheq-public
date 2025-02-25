@@ -1,6 +1,5 @@
 // import React, { useEffect } from 'react'
 import { Modal, View, TouchableOpacity, Text, Alert, StyleSheet } from 'react-native'
-// import { supabase } from '../lib/supabase'
 import { Styles, Colors } from '../lib/constants'
 import { useContainerContext } from './ContainerContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -10,7 +9,7 @@ export default function LogoutModal({
     isLogoutMode,
     setLogoutMode
 }) {
-    const { user, setUser } = useContainerContext()
+    const { setUser } = useContainerContext()
 
     async function signOut() {
         console.log('in signOut')

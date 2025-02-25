@@ -16,7 +16,7 @@ exports.addUser = functions.auth.user().onCreate(user => {
   console.log('user:', user)
   admin
   .database()
-  .ref(`userData/${user.uid}`)
+  .ref(`userData/${user.user.uid}`)
   .set({
     phoneNumber: user.phoneNumber,
     settings: {

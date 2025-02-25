@@ -45,13 +45,13 @@ async function uploadPhoto(uri: string, userUid: string, recipient: string, resp
       console.log("uri:", uri);
       const res = await ref.putFile(uri, metadata).catch((err) => {
         console.log('err:', err)
-        recordError(err, userUid)
+        recordError(err, {user: userUid, function: "uploadPhoto"})
       })
 
       resolve(res);
     } catch (error) {
       console.log("error:", error);
-      recordError(error, userUid)
+      recordError(error, {user: userUid, function: "uploadPhoto"})
       reject(error);
     }
   });
@@ -67,18 +67,18 @@ export default function ReviewPhoto(): React.JSX.Element {
     setPage,
     respondingTo,
     setRespondingTo,
+    userUid
   } = useContainerContext();
 
   async function sendPhoto() {
     setLoading(true);
     console.log("sending photo. user:", user);
-    console.log('user.uid:', user.uid)
     let inboxImageName = respondingTo ? Object.keys(userData.inbox)[0] : ''
     let inboxImageUrl = respondingTo ? userData.inbox[Object.keys(userData.inbox)[0]].url : ''
     // "as StorageData" is a type assertion
     const storageData = await uploadPhoto(
       capturedImageUri,
-      user.uid,
+      userUid,
       respondingTo,
       inboxImageName,
       inboxImageUrl
@@ -88,11 +88,10 @@ export default function ReviewPhoto(): React.JSX.Element {
 
     if (respondingTo) {
       // delete from database
-      const { uid } = user;
       const toBeDeleted = Object.keys(userData.inbox)[0];
-      console.log('uid:', uid)
+      console.log('userUid:', userUid)
       console.log('toBeDeleted:', toBeDeleted)
-      await database().ref(`userData/${uid}/inbox/${toBeDeleted}`).remove()  
+      await database().ref(`userData/${userUid}/inbox/${toBeDeleted}`).remove()  
     }
 
 

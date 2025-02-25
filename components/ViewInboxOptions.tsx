@@ -18,9 +18,9 @@ export default function ViewInboxOptions({
     const [isReportLoading, setReportLoading] = useState(false)
     const [isSenderBlocked, setSenderBlocked] = useState(false)
     const [isSenderReported, setSenderReported] = useState(false)
-    const { user, setPage, respondingTo, setRespondingTo, userData } = useContainerContext();
+    const { user, setPage, respondingTo, setRespondingTo, userData, userUid } = useContainerContext();
 
-    const { uid } = user
+    console.log('ViewInboxOptions user:', user)
 
     async function blockUser() {
         if (isBlockLoading || isSenderBlocked) return
@@ -28,7 +28,7 @@ export default function ViewInboxOptions({
 
         const today = String(new Date())
         await database()
-            .ref(`userData/${uid}/blockList/${respondingTo}`)
+            .ref(`userData/${userUid}/blockList/${respondingTo}`)
             .set({
                 date: today
             }).catch((err) => {
@@ -50,7 +50,7 @@ export default function ViewInboxOptions({
         await newRef
             .set({
                 date: today,
-                reportedBy: uid
+                reportedBy: userUid
             }).catch((err) => {
                 console.log('reportUser err:', err)
             })
@@ -63,9 +63,9 @@ export default function ViewInboxOptions({
 
     async function deleteFromInbox() {
         const toBeDeleted = Object.keys(userData.inbox)[0];
-        console.log('uid:', uid)
+        console.log('userUid:', userUid)
         console.log('toBeDeleted:', toBeDeleted)
-        await database().ref(`userData/${uid}/inbox/${toBeDeleted}`).remove();  
+        await database().ref(`userData/${userUid}/inbox/${toBeDeleted}`).remove();  
     }
 
     async function deleteFromStorage() {

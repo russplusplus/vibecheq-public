@@ -21,7 +21,7 @@ const windowWidth = Dimensions.get('window').width
 
 export default function ViewInbox() {
   const [optionsMode, setOptionsMode] = useState<boolean>(false)
-  const { user, setPage, respondingTo, setRespondingTo, userData } = useContainerContext();
+  const { user, setPage, respondingTo, setRespondingTo, userData, userUid } = useContainerContext();
 
   async function handlePressAnywhere() {
     console.log("in handlePressAnywhere");
@@ -32,11 +32,10 @@ export default function ViewInbox() {
       return
     }
     // delete from database
-    const { uid } = user
     const inboxImageName = Object.keys(userData.inbox)[0];
-    console.log('uid:', uid)
+    console.log('userUid:', userUid)
     console.log('inboxImageName:', inboxImageName)
-    await database().ref(`userData/${uid}/inbox/${inboxImageName}`).remove();
+    await database().ref(`userData/${userUid}/inbox/${inboxImageName}`).remove();
 
     // delete from storage
     const { respondingToImageName } = userData.inbox[inboxImageName]

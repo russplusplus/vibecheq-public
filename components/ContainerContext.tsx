@@ -11,6 +11,8 @@ type UserData = {
 type ContainerContext = {
     user: any,
     setUser: React.Dispatch<React.SetStateAction<any>>
+    userUid: string,
+    setUserUid: React.Dispatch<React.SetStateAction<string>>,
     userData: UserData, 
     setUserData: React.Dispatch<React.SetStateAction<UserData>>, 
     page: string, 
@@ -26,6 +28,7 @@ const ContainerContext = createContext<ContainerContext | null>(null)
 
 export const ContainerContextProvider = (props: any) => {
     const [user, setUser] = useState<any>(null)
+    const [userUid, setUserUid] = useState<any>(null)
     const [userData, setUserData] = useState<UserData | null>(null)
     const [page, setPage] = useState<string>('CameraPage')
     const [capturedImageUri, setCapturedImageUri] = useState<string>('')
@@ -34,6 +37,8 @@ export const ContainerContextProvider = (props: any) => {
     const value = {
         user,
         setUser,
+        userUid,
+        setUserUid,
         userData,
         setUserData,
         page,
@@ -47,6 +52,10 @@ export const ContainerContextProvider = (props: any) => {
     useEffect(() => {
         console.log('user changed:', user)
     }, [user])
+
+    useEffect(() => {
+        console.log('userUid changed:', userUid)
+    }, [userUid])
 
     return <ContainerContext.Provider value={value} {...props}/>
 }

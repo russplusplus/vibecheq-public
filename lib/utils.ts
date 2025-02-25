@@ -9,7 +9,7 @@ export async function getUserData(uid: string): Promise<any>  {
       .ref(ref)
       .once('value')
       const userData = await snapshot.val()
-      console.log('in getUserData. user:', userData)
+      console.log('got userData:', userData)
       if (!userData) {
           console.log('user data not found')
           reject('user data not found')
@@ -23,7 +23,7 @@ export async function getUserData(uid: string): Promise<any>  {
   })
 }
 
-export async function recordError(error, user?) {
+export async function recordError(error, options?) {
   console.log('in logError. error:', error)
   const dateTime = String(new Date())
 
@@ -34,7 +34,8 @@ export async function recordError(error, user?) {
   await newRef.set({
     err: error.toString(),
     dateTime: dateTime,
-    user: user
+    user: options.user,
+    function: options.function
   }).catch((err) => {
     console.log('logError err:', err)
   })

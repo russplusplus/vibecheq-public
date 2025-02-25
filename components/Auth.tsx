@@ -35,7 +35,7 @@ export default function Auth() {
   const [error, setError] = useState<string>('')
   const [confirm, setConfirm] = useState<any>(null)
 
-  const { user, setUser } = useContainerContext()
+  const { setUser, setUserUid } = useContainerContext()
 
   async function sendOtp() {
     log('in sendOtp')
@@ -52,7 +52,7 @@ export default function Auth() {
         setError('An unknown error occurred.')
       }
       setLoading(false)
-      recordError(err)
+      recordError(err, {function: "sendOtp"})
       return
     })
     console.log('confirmation:', confirmation)
@@ -68,7 +68,7 @@ export default function Auth() {
     
     const user = await confirm.confirm(password).catch((err) => {
       console.log('err:', err)
-      recordError(err)
+      recordError(err, {function: "verifyOtp"})
       const errString = err.toString()
       if (errString.includes('invalid')) {
         setError('Invalid code.')
@@ -82,10 +82,11 @@ export default function Auth() {
 
     console.log('user:', user)
 
-    const { uid } = user
+    const { uid } = user.user
     console.log('code is valid! user:', user)
     await updateRegistrationToken(uid)
     setUser(user)
+    setUserUid(uid)
     await AsyncStorage.setItem("user", JSON.stringify(user))
 
     setLoading(false)
@@ -109,7 +110,7 @@ export default function Auth() {
       })
     } catch (err) {
       log(err)
-      recordError(err)
+      recordError(err, {user: uid, function: "updateRegistrationToken"})
     }
   }
   
@@ -117,7 +118,9 @@ export default function Auth() {
     auth().onAuthStateChanged((user) => {
       if (user) {
         console.log('onAuthStateChanged triggered in the background. user:', user)
+        console.log('user.uid:', user.uid)
         setUser(user)
+        setUserUid(user.uid)
         updateRegistrationToken(user.uid)
 
       } else {
