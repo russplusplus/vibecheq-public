@@ -17,12 +17,23 @@ import storage from "@react-native-firebase/storage";
 import database from '@react-native-firebase/database'
 import { useContainerContext } from "./ContainerContext"
 import { recordError } from '../lib/utils';
-import { RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads'
+import mobileAds, { RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
 const adUnitId = __DEV__ ? TestIds.REWARDED : Platform.OS === "ios" ? "ca-app-pub-3618369904609105/7605742442" : "ca-app-pub-3618369904609105/6484232463"
+
+// mobileAds()
+//   .setRequestConfiguration({
+//     testDeviceIdentifiers: ["EMULATOR"]
+//   })
+
+mobileAds()
+  .initialize()
+  .then(adapterStatuses => {
+    console.log('adapterStatuses:', adapterStatuses)
+  })
 
 const rewardedAd = RewardedAd.createForAdRequest(adUnitId, {})
 
@@ -99,8 +110,12 @@ export default function ReviewPhoto(): React.JSX.Element {
     }
 
 
-    if (isAdLoaded) rewardedAd.show()
-
+    if (isAdLoaded) {
+      console.log('showing ad')
+      rewardedAd.show()
+    } else {
+      console.log('ad is not loaded yet')
+    }
 
     setRespondingTo(null);
     setLoading(false);
