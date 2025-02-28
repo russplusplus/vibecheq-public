@@ -35,7 +35,7 @@ export default function Auth() {
   const [error, setError] = useState<string>('')
   const [confirm, setConfirm] = useState<any>(null)
 
-  const { setUser, setUserUid } = useContainerContext()
+  const { setUser, setUserUid, isLogoutMode } = useContainerContext()
 
   async function sendOtp() {
     log('in sendOtp')
@@ -116,7 +116,7 @@ export default function Auth() {
   
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
-      if (user) {
+      if (user && !isLogoutMode) {
         console.log('onAuthStateChanged triggered in the background. user:', user)
         console.log('user.uid:', user.uid)
         setUser(user)

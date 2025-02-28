@@ -24,7 +24,7 @@ log('windowWidth:', windowWidth)
 export default function CameraPage() {
 
   const [facing, setFacing] = useState<CameraType>('back')
-  const [isLogoutMode, setLogoutMode] = useState<boolean>(false)
+  // const [isLogoutMode, setLogoutMode] = useState<boolean>(false)
   const [isLoading, setLoading] = useState<boolean>(false)
   const [isWelcomeMode, setWelcomeMode] = useState<boolean>(false)
   const [isSettingsMode, setSettingsMode] = useState<boolean>(false)
@@ -32,7 +32,18 @@ export default function CameraPage() {
   const [permission, requestPermission] = useCameraPermissions()
   const cameraRef = useRef<CameraView>(null)
 
-  const { user, setCapturedImageUri, setPage, userData, setUserData, respondingTo, setRespondingTo, userUid } = useContainerContext()
+  const { 
+    user, 
+    setCapturedImageUri, 
+    setPage, 
+    userData, 
+    setUserData, 
+    respondingTo, 
+    setRespondingTo, 
+    userUid, 
+    isLogoutMode, 
+    setLogoutMode 
+  } = useContainerContext()
 
   if (!permission) {
     requestPermission()
@@ -90,6 +101,10 @@ export default function CameraPage() {
   useEffect(() => {
     init()
   }, [userUid])
+
+  useEffect(() => {
+    setLogoutMode(false)
+  }, [])
 
   return (
 

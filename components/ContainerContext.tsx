@@ -20,7 +20,9 @@ type ContainerContext = {
     capturedImageUri: string,
     setCapturedImageUri: React.Dispatch<React.SetStateAction<string>>,
     respondingTo: string,
-    setRespondingTo: React.Dispatch<React.SetStateAction<string>>
+    setRespondingTo: React.Dispatch<React.SetStateAction<string>>,
+    isLogoutMode: boolean,
+    setLogoutMode: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // initial value provided here is what you get if you try to consume context outside of the provider
@@ -33,6 +35,7 @@ export const ContainerContextProvider = (props: any) => {
     const [page, setPage] = useState<string>('CameraPage')
     const [capturedImageUri, setCapturedImageUri] = useState<string>('')
     const [respondingTo, setRespondingTo] = useState<string>('')
+    const [isLogoutMode, setLogoutMode] = useState<boolean>(false)
 
     const value = {
         user,
@@ -46,7 +49,9 @@ export const ContainerContextProvider = (props: any) => {
         capturedImageUri,
         setCapturedImageUri,
         respondingTo,
-        setRespondingTo
+        setRespondingTo,
+        isLogoutMode,
+        setLogoutMode
     }
 
     useEffect(() => {
