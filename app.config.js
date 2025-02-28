@@ -54,6 +54,13 @@ export default {
           }
         }
       ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3618369904609105~5934697428",
+          "iosAppId": "ca-app-pub-3618369904609105~8748563025"
+        }
+      ],
       "expo-font"
     ],
     "extra": {

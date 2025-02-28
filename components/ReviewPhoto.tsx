@@ -17,9 +17,14 @@ import storage from "@react-native-firebase/storage";
 import database from '@react-native-firebase/database'
 import { useContainerContext } from "./ContainerContext"
 import { recordError } from '../lib/utils';
+import { RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
+
+const adUnitId = __DEV__ ? TestIds.REWARDED : Platform.OS === "ios" ? "ca-app-pub-3618369904609105/7605742442" : "ca-app-pub-3618369904609105/6484232463"
+
+const rewardedAd = RewardedAd.createForAdRequest(adUnitId, {})
 
 async function uploadPhoto(uri: string, userUid: string, recipient: string, respondingToImageName: string, respondingToImageUrl: string) {
   return new Promise(async (resolve, reject) => {
