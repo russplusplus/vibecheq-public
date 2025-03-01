@@ -32,7 +32,7 @@ export default function SettingsModal({
                     <ScrollView contentContainerStyle={{alignItems: 'center'}}>
                         <Text style={styles.title}>About</Text>
                         <Text style={styles.text}>
-                            Vibecheq allows users to take a photo and send it to a randomly-selected recipient. The recipient will then respond with a photo of their own. Vibecheq is completely anonymous, and no data is collected from users other than the phone number used to register the account. Images are vetted with an AI algorithm to detect and filter explicit content.
+                            Vibecheq allows users to take a photo and send it to a randomly-selected recipient. The recipient will then respond with a photo of their own. Vibecheq is completely anonymous, and no data is collected from users other than the phone number used to register each account. Images are vetted with an AI algorithm to detect and filter explicit content.
                         </Text>
                         <Text style={styles.title}>Support</Text>
                         <Text style={styles.text}>
