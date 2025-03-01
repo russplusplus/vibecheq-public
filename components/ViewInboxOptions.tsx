@@ -28,15 +28,15 @@ export default function ViewInboxOptions({
 
         const today = String(new Date())
         await database()
-            .ref(`userData/${userUid}/blockList/${respondingTo}`)
+            .ref(`userData/${userUid}/blockList/${userData.inbox[Object.keys(userData.inbox)[0]].from}`)
             .set({
                 date: today
             }).catch((err) => {
                 console.log('blockUser err:', err)
             })
 
-        deleteFromInbox()
-        deleteFromStorage()
+        // deleteFromInbox()
+        // deleteFromStorage()
             
         setSenderBlocked(true)
     }
@@ -46,7 +46,7 @@ export default function ViewInboxOptions({
         setReportLoading(true)
 
         const today = String(new Date())
-        const newRef = database().ref(`/reports/${respondingTo}`).push()
+        const newRef = database().ref(`/reports/${userData.inbox[Object.keys(userData.inbox)[0]].from}`).push()
         await newRef
             .set({
                 date: today,

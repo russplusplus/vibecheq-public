@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Modal,
-  ImageBackground,
   TouchableOpacity,
   View,
   Platform,
@@ -146,10 +144,11 @@ export default function ReviewPhoto(): React.JSX.Element {
   }, [])
 
   return (
-    <ImageBackground
-      source={{ uri: capturedImageUri }}
-      style={styles.background}
-    >
+    <View style={styles.background}>
+      <Image
+        source={{ uri: capturedImageUri }}
+        style={styles.backgroundImage}
+      />
       <View style={styles.bottomButtons}>
         {respondingTo ? (
           <Image
@@ -173,7 +172,7 @@ export default function ReviewPhoto(): React.JSX.Element {
           )}
         </TouchableOpacity>
       </View>
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -183,6 +182,13 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "column",
     justifyContent: "flex-end",
+  },
+  backgroundImage: {
+    position: 'absolute',
+    height: windowHeight,
+    width: windowWidth,
+    left: 0,
+    bottom: 0
   },
   bottomButtons: {
     flex: 0.5,

@@ -63,12 +63,15 @@ export default function ViewInbox() {
       />
 
       <TouchableWithoutFeedback onPress={handlePressAnywhere}>
-        <ImageBackground
+        <View
           style={styles.background}
-          source={{
-            uri: userData.inbox[Object.keys(userData.inbox)[0]].url,
-          }}
         >
+          <Image
+            style={styles.backgroundImage}
+            source={{
+              uri: userData.inbox[Object.keys(userData.inbox)[0]].url,
+            }}
+          />
           <TouchableOpacity onPress={() => setOptionsMode(true)} style={styles.topButtons}>
             <SimpleLineIcons name="options" size={24} color={Colors.white} />
           </TouchableOpacity>
@@ -80,7 +83,7 @@ export default function ViewInbox() {
             :
             null
           }
-        </ImageBackground>
+        </View>
       </TouchableWithoutFeedback>
     </View>
   );
@@ -94,6 +97,13 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
+  },
+  backgroundImage: {
+    position: 'absolute',
+    height: windowHeight,
+    width: windowWidth,
+    left: 0,
+    bottom: 0
   },
   image: {
     borderRadius: 5,
