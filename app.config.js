@@ -9,7 +9,7 @@ export default {
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#303841"
+      "backgroundColor": "#22272C"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -23,7 +23,7 @@ export default {
       "googleServicesFile": process.env.GOOGLE_SERVICES_JSON ?? "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#303841"
+        "backgroundColor": "#22272C"
       },
       "permissions": [
         "android.permission.CAMERA",
