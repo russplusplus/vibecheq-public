@@ -23,6 +23,10 @@ export default function ViewInbox() {
   const [optionsMode, setOptionsMode] = useState<boolean>(false)
   const { user, setPage, respondingTo, setRespondingTo, userData, userUid } = useContainerContext();
 
+  async function prefetch() {
+    await Image.prefetch(userData.inbox[Object.keys(userData.inbox)[0]].url)
+  }
+
   async function handlePressAnywhere() {
     console.log("in handlePressAnywhere");
     // don't delete from database or storage yet if the user will be responding,
@@ -46,6 +50,9 @@ export default function ViewInbox() {
   }
 
   useEffect(() => {
+    console.log('in ViewInbox useEffect')
+    prefetch()
+
     if (userData.inbox[Object.keys(userData.inbox)[0]].isResponse) {
       setRespondingTo(null);
     } else {
