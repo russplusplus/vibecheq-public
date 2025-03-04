@@ -99,6 +99,22 @@ export default function CameraPage() {
   }
 
   useEffect(() => {
+    console.log('in userData useEffect')
+    if (userData?.inbox) {
+      console.log('userData inbox detected. Prefetching...')
+      const inboxUrl = userData.inbox[Object.keys(userData.inbox)[0]].url
+      console.log('inboxUrl:', inboxUrl)
+      Image.prefetch(inboxUrl)
+      if (userData.inbox[Object.keys(userData.inbox)[0]].respondingToImageUrl) {
+        console.log('respondingToUrl detected. Prefetching...')
+        const respondingToImageUrl = userData.inbox[Object.keys(userData.inbox)[0]].respondingToImageUrl
+        console.log('respondingToImageUrl:', respondingToImageUrl)
+        Image.prefetch(respondingToImageUrl)
+      }
+    }
+  }, [userData])
+
+  useEffect(() => {
     init()
   }, [userUid])
 

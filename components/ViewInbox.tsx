@@ -15,12 +15,14 @@ import { useContainerContext } from "./ContainerContext";
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons'
 import { Styles, Colors } from '../lib/constants'
 import ViewInboxOptions from "./ViewInboxOptions";
+import LoadingModal from "./LoadingModal"
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
 export default function ViewInbox() {
   const [optionsMode, setOptionsMode] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false)
   const { user, setPage, respondingTo, setRespondingTo, userData, userUid } = useContainerContext();
 
   async function prefetch() {
@@ -28,6 +30,7 @@ export default function ViewInbox() {
   }
 
   async function handlePressAnywhere() {
+    setLoading(true)
     console.log("in handlePressAnywhere");
     // don't delete from database or storage yet if the user will be responding,
     // because we need the first inbox image to show in CameraPage and ReviewPhoto.
@@ -69,6 +72,10 @@ export default function ViewInbox() {
         setOptionsMode={setOptionsMode}
       />
 
+      <LoadingModal
+        isLoading={isLoading}
+      />
+
       <TouchableWithoutFeedback onPress={handlePressAnywhere}>
         <View
           style={styles.background}
@@ -79,9 +86,11 @@ export default function ViewInbox() {
               uri: userData.inbox[Object.keys(userData.inbox)[0]].url,
             }}
           />
-          <TouchableOpacity onPress={() => setOptionsMode(true)} style={styles.topButtons}>
-            <SimpleLineIcons name="options" size={24} color={Colors.white} />
-          </TouchableOpacity>
+          <View style={styles.topButtons}>
+            <TouchableOpacity onPress={() => setOptionsMode(true)}>
+              <SimpleLineIcons name="options" size={24} color={Colors.white} />
+            </TouchableOpacity>
+          </View>
           {userData.inbox[Object.keys(userData.inbox)[0]].isResponse ?
             <Image
               source={{ uri: userData.inbox[Object.keys(userData.inbox)[0]].respondingToImageUrl }}
