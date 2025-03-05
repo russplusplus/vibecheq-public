@@ -2,7 +2,7 @@ export default {
   "expo": {
     "name": "Vibecheq",
     "slug": "vibecheq",
-    "version": "1.0.16",
+    "version": "1.0.18",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
