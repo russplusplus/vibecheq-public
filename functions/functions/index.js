@@ -152,6 +152,11 @@ async function determineRecipientUid(allUsers, senderUid) {
         continue
       }
 
+      const isSenderBlocked = await isRecipientUidBlocked(senderUid, recipientUid)
+      if (isSenderBlocked) {
+        continue
+      }
+
       isValid = true
 
     } while (!isValid)
