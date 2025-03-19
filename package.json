@@ -1,6 +1,6 @@
 {
   "name": "vibecheq",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start --go",
@@ -10,7 +10,8 @@
     "build": "expo prebuild",
     "create-weight-urls": "node cli/createModelWeightSignedUrls.js",
     "get-android-keys": "cd android && ./gradlew signingReport && cd ..",
-    "eas-build": "npx eas build"
+    "eas-build": "npx eas build",
+    "submit": "npx eas submit"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.23.1",
