@@ -325,7 +325,7 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - fmt (9.1.0)
   - glog (0.3.5)
-  - Google-Mobile-Ads-SDK (12.2.0):
+  - Google-Mobile-Ads-SDK (11.13.0):
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleDataTransport (9.4.1):
     - GoogleUtilities/Environment (~> 7.7)
@@ -1898,10 +1898,10 @@ PODS:
     - Firebase/Storage (= 10.24.0)
     - React-Core
     - RNFBApp
-  - RNGoogleMobileAds (14.10.1):
+  - RNGoogleMobileAds (14.7.0):
     - DoubleConversion
     - glog
-    - Google-Mobile-Ads-SDK (= 12.2.0)
+    - Google-Mobile-Ads-SDK (= 11.13.0)
     - GoogleUserMessagingPlatform (= 2.7.0)
     - hermes-engine
     - RCT-Folly (= 2024.01.01.00)
@@ -2279,7 +2279,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 03710f9a0e3824d3069ed1128601a3d3a5e7d817
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
-  Google-Mobile-Ads-SDK: 1dfb0c3cb46c7e2b00b0f4de74a1e06d9ea25d67
+  Google-Mobile-Ads-SDK: 14f57f2dc33532a24db288897e26494640810407
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUserMessagingPlatform: a8b56893477f67212fbc8411c139e61d463349f5
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
@@ -2353,7 +2353,7 @@ SPEC CHECKSUMS:
   RNFBDatabase: f7efa4d6b40453dcef530c44070ffb9fb4876d8d
   RNFBMessaging: c8d34d9ad44a3258a77e548bba6dc3561af7cf2d
   RNFBStorage: 6b9e050fa9d7b84f6c164e1c7ffe829086568ae2
-  RNGoogleMobileAds: a286cef73731231843905a51e90901f08dfe1b58
+  RNGoogleMobileAds: 7408298d0fa741de1440f347c2b7335d5d65ae70
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   SDWebImageAVIFCoder: 00310d246aab3232ce77f1d8f0076f8c4b021d90
   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
