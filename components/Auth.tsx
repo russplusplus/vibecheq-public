@@ -39,6 +39,12 @@ export default function Auth() {
 
   async function sendOtp() {
     log('in sendOtp')
+    
+    if (!phoneNumber) {
+      setError('Please enter a valid phone number.')
+      return
+    }
+
     setLoading(true)
     const fullPhoneNumber = selectedCountry?.callingCode + ' ' + phoneNumber
     console.log('in sendOtp. fullPhoneNumber:', fullPhoneNumber)
@@ -134,7 +140,7 @@ export default function Auth() {
   })
 
   return (
-    <View style={styles.container} >
+    <KeyboardAvoidingView style={styles.container} >
       <>
       <Image
         source={require('../assets/title.png')}
@@ -198,7 +204,7 @@ export default function Auth() {
         </TouchableWithoutFeedback>
       }
       </>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -304,7 +310,9 @@ const styles = StyleSheet.create({
 
 function getTopMargin(height: number) {
   console.log('height:', height)
-  if (height < 800) {
+  if (height < 700) {
+    return 200
+  } else if (height < 800) {
     return 250
   } else if (height < 900) {
     return 300
