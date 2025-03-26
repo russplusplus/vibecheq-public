@@ -37,3 +37,6 @@ yarn-error.*
 # firebase config files
 google-services-DEV.json
 GoogleService-Info-DEV.plist
+
+google-services.json
+GoogleService-Info.plist
